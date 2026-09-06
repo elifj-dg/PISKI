@@ -32,7 +32,15 @@ export default function LandingPiski() {
         ctaLabel={CTA_LABEL}
         ctaHref={CTA_HREF}
         socialProof={<span>7 días gratis · Garantía de 15 días · cancela cuando quieras</span>}
-        visualPlaceholderSugerencia="captura del Motor ¿Qué Como Ahora? con 3 opciones y el dato de proteína faltante"
+        visual={
+          <img
+            src="/mockups/home.png"
+            alt="Pantalla principal de Piski: tu día en un vistazo, con el anillo de progreso, tu proteína y calorías restantes, y el botón ¿Qué Como Ahora?"
+            width={750}
+            height={1584}
+            className="h-full w-full object-cover"
+          />
+        }
       />
 
       {/* 2. PROBLEMA */}
@@ -83,10 +91,10 @@ export default function LandingPiski() {
       <AppPorDentro
         tituloMarked="Así se ve tu día en [b]Piski[/b]"
         frames={[
-          { label: 'Tu proteína y calorías del día, de un vistazo', nombrePantalla: 'Inicio' },
-          { label: '2-3 opciones con lo que ya tienes', nombrePantalla: '¿Qué Como Ahora?' },
-          { label: 'Si no sabes qué hacer, resuelve en segundos', nombrePantalla: 'Modo rescate' },
-          { label: 'Tus básicos y tu objetivo, siempre a mano', nombrePantalla: 'Perfil' },
+          { src: '/mockups/home.png', label: 'Tu proteína y calorías del día, de un vistazo', nombrePantalla: 'Inicio' },
+          { src: '/mockups/que-como-ahora.png', label: '2-3 opciones con lo que ya tienes', nombrePantalla: '¿Qué Como Ahora?' },
+          { src: '/mockups/modo-rescate.png', label: 'Si no sabes qué hacer, resuelve en segundos', nombrePantalla: 'Modo rescate' },
+          { src: '/mockups/perfil.png', label: 'Tus básicos y tu objetivo, siempre a mano', nombrePantalla: 'Perfil' },
         ]}
         ctaLabel={CTA_LABEL}
         ctaHref={CTA_HREF}

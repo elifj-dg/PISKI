@@ -46,13 +46,14 @@
 
 ## 5. LA APP POR DENTRO
 - tituloMarked: `Así se ve tu día en [b]Piski[/b]`
-- frames (PLACEHOLDER honesto — la app interna se construye en Sesión 5; anotado en ESTADO.md):
-  1. `Tu proteína y calorías del día, de un vistazo` — pantalla: Inicio
-  2. `2-3 opciones con lo que ya tienes` — pantalla: ¿Qué Como Ahora?
-  3. `Si no sabes qué hacer, resuelve en segundos` — pantalla: Modo rescate
-  4. `Tus básicos y tu objetivo, siempre a mano` — pantalla: Perfil
+- frames (mini-demo HTML/CSS honesto — tier 2 de la jerarquía de fidelidad de 19 §5: son los mockups de `vista-previa-app.html` ya aprobados por el usuario, recortados como imágenes estáticas en `public/mockups/`, NO screenshots de la app interna en código — esa se construye en Sesión 5 y ahí se reemplazan por capturas reales):
+  1. `/mockups/home.png` — `Tu proteína y calorías del día, de un vistazo` — pantalla: Inicio
+  2. `/mockups/que-como-ahora.png` — `2-3 opciones con lo que ya tienes` — pantalla: ¿Qué Como Ahora?
+  3. `/mockups/modo-rescate.png` — `Si no sabes qué hacer, resuelve en segundos` — pantalla: Modo rescate
+  4. `/mockups/perfil.png` — `Tus básicos y tu objetivo, siempre a mano` — pantalla: Perfil
 - ctaLabel/ctaHref: igual al hero
 - Testimonios: NINGUNO todavía (regla de <3 reales — no se muestran cards de testimonios)
+- Hero: el `visual` usa `/mockups/home.png` (el mismo mockup del Home) en vez del placeholder de cámara — muestra el anillo de progreso (dispositivo ownable de FICHA-ARTE.md) desde el primer viewport
 
 ## 6. OFERTA
 - tituloMarked: `Empieza gratis. Sigue por [b]menos de $3 al día[/b]`
