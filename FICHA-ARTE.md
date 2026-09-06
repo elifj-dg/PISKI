@@ -37,7 +37,7 @@
 
 ## Trazabilidad y vetos
 - Ruta de diseño: réplica/aplicación fiel del branding ya aprobado por el usuario (no exploración A/B/C — la marca ya es cosa juzgada desde antes de esta sesión)
-- Tour de la app: `docs/revisiones/piski-tour.html` (Onboarding · Home "¿Qué Como Ahora?" · Paywall · Perfil) — pendiente de aprobación del usuario
+- Tour de la app: `vista-previa-app.html` (raíz del proyecto — Onboarding · Home "¿Qué Como Ahora?" · Paywall · Perfil), screenshot en `docs/revisiones/vista-previa-app-375.png` — pendiente de aprobación del usuario
 - Paleta derivada de: kit de marca aportado por el usuario (Piski) — tomada tal cual, sin perturbar hues
 - Registro anti-repetición: paleta verde-nopal/lima/maíz/terracota + Fredoka/Inter — vetados para el próximo proyecto de este SO
 - Modo (claro/oscuro) DERIVADO por: el propio moodboard del usuario (fondo crema en toda la exploración de marca) — no asumido

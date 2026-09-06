@@ -87,8 +87,11 @@ App de decisiones de alimentación para México: convierte objetivo + lo que tie
 
 ## Sesión 2 — Identidad visual (en curso)
 - `FICHA-ARTE.md` completa: modo claro derivado del propio moodboard de marca (fondo crema), display Fredoka (proxy real de "Piski Display"), body Inter, acento Maíz + 2ª nota Terracota, radio 20/14/8px, dispositivo ownable = hoja bicolor + blob orgánico sutil.
-- Tour de la app construido y renderizado: `docs/revisiones/piski-tour.html` (Onboarding · Home "¿Qué Como Ahora?" · Paywall · Perfil) — verificado a 375px en navegador, enviado al usuario. Pendiente de aprobación.
+- `vista-previa-app.html` (raíz del proyecto, EL TOUR de 54): Onboarding · Home "¿Qué Como Ahora?" · Paywall · Perfil, con el frame ya tematizado. Screenshot verificado a 375px: `docs/revisiones/vista-previa-app-375.png`. Copia idéntica en `docs/revisiones/piski-tour.html` (mismo contenido, ruta de trabajo). Enviado al usuario — pendiente de la pregunta del tour (me encanta / ajustar / repensar).
 - Nota: la puntuación formal del revisor-visual (/40 usabilidad, /20 craft) se aplica cuando estas pantallas se construyan como código real de producción (Sesiones 3-5) — este tour es la aprobación de DIRECCIÓN visual, no el cierre de pantalla.
 
+## Problemas conocidos
+- **direcciones-abc**: este proyecto NO generó `direcciones-abc.html` ni `replica-fiel.html` porque no aplicó ninguna de las dos rutas del protocolo 54 — el usuario aportó su propio branding ya cerrado (nombre, paleta, tipografía, isotipo) directamente como archivos de marca, no como una captura de pantalla completa de una app de referencia (eso habría activado réplica fiel) ni como un pedido abierto de "propónme estilos" (eso habría activado A/B/C). La FICHA-ARTE.md documenta la extracción de esos assets de marca como el equivalente funcional de la extracción de referencia. Si en el futuro se pide variar la dirección visual, ahí sí corresponde correr el protocolo A/B/C completo.
+
 ## Siguiente paso
-Esperando aprobación del usuario sobre el tour visual. Tras aprobar: Sesión 3 (página de ventas).
+Esperando aprobación del usuario sobre el tour visual (`vista-previa-app.html`). Tras aprobar: Sesión 3 (página de ventas).
