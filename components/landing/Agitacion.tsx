@@ -53,17 +53,17 @@ export function Agitacion({ frases, contraste, id }: AgitacionProps) {
         {contraste && (
           <motion.div variants={item} className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="rounded-[var(--radius-card)] bg-[var(--bg)] p-5">
-              <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--text-tertiary)]">
+              <p className="text-[12px] font-bold uppercase tracking-[0.08em] text-[var(--text-tertiary)]">
                 {contraste.labelHoy}
               </p>
               <p className="mt-2 text-[15px] leading-snug text-[var(--text-primary)]">{contraste.hoy}</p>
             </div>
-            {/* "si nada cambia": más apagado/frío — el peso lo pone el copy, no el rojo */}
-            <div className="rounded-[var(--radius-card)] bg-[var(--surface-2)] p-5">
-              <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--text-tertiary)]">
+            {/* "si nada cambia": diferenciado con acento de marca (pedido explícito) */}
+            <div className="rounded-[var(--radius-card)] border border-[color-mix(in_oklab,var(--accent)_35%,transparent)] bg-[color-mix(in_oklab,var(--accent)_9%,transparent)] p-5 shadow-[0_4px_16px_-6px_color-mix(in_oklab,var(--accent)_35%,transparent)]">
+              <p className="text-[12px] font-bold uppercase tracking-[0.08em] text-[var(--accent)]">
                 {contraste.labelFuturo}
               </p>
-              <p className="mt-2 text-[15px] leading-snug text-[var(--text-secondary)]">{contraste.futuro}</p>
+              <p className="mt-2 text-[15px] font-semibold leading-snug text-[var(--text-primary)]">{contraste.futuro}</p>
             </div>
           </motion.div>
         )}

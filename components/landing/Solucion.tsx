@@ -8,7 +8,8 @@
 // escalonados (whileInView + stagger, reduced-motion respetado).
 
 import { motion } from 'motion/react';
-import { Accent, Hairline, Kicker, SectionShell, useReveal, VIEWPORT_ONCE } from './ui';
+import type { LucideIcon } from 'lucide-react';
+import { IconChip, Kicker, SectionShell, useReveal, VIEWPORT_ONCE } from './ui';
 import { MarkedCopy, warnCopy } from './MarkedCopy';
 
 export interface PasoMecanismo {
@@ -16,6 +17,8 @@ export interface PasoMecanismo {
   titulo: string;
   /** UNA línea (warn a las 14 palabras). */
   detalle: string;
+  /** Ícono del paso (Lucide) — reemplaza el number chip cuando se define. */
+  icon?: LucideIcon;
 }
 
 export interface SolucionProps {
@@ -69,13 +72,11 @@ export function Solucion({
           </h2>
         </motion.div>
 
-        {/* El chip del mecanismo bautizado — hairline + <Accent> (55 §4) */}
+        {/* El chip del mecanismo bautizado — pastilla sólida en acento (pedido explícito de marca) */}
         <motion.div variants={item} className="mt-4">
-          <Hairline surface="bg" className="w-fit">
-            <span className="block px-4 py-2 text-[15px] font-semibold">
-              <Accent>{mecanismo}</Accent>
-            </span>
-          </Hairline>
+          <span className="inline-block w-fit rounded-[var(--radius-button)] bg-[var(--accent)] px-4 py-2 text-[15px] font-semibold text-[var(--bg)] shadow-[0_4px_14px_color-mix(in_oklab,var(--accent)_30%,transparent)]">
+            {mecanismo}
+          </span>
         </motion.div>
 
         <motion.p variants={item} className="mt-5 max-w-[620px] text-[17px] leading-relaxed text-[var(--text-secondary)] md:text-[18px]">
@@ -86,12 +87,16 @@ export function Solucion({
         <ol className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
           {pasos.map((p, i) => (
             <motion.li key={i} variants={item} className="flex items-start gap-4 md:flex-col">
-              <span
-                aria-hidden="true"
-                className="flex size-11 shrink-0 items-center justify-center rounded-[var(--radius-button)] border border-[color-mix(in_oklab,var(--accent)_22%,transparent)] bg-[var(--chip-bg)] text-[17px] font-bold tabular-nums text-[var(--accent)]"
-              >
-                {String(i + 1).padStart(2, '0')}
-              </span>
+              {p.icon ? (
+                <IconChip icon={p.icon} />
+              ) : (
+                <span
+                  aria-hidden="true"
+                  className="flex size-11 shrink-0 items-center justify-center rounded-[var(--radius-button)] border border-[color-mix(in_oklab,var(--accent)_22%,transparent)] bg-[var(--chip-bg)] text-[17px] font-bold tabular-nums text-[var(--accent)]"
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+              )}
               <div className="pt-1 md:pt-0">
                 <h3 className="text-[16px] font-semibold text-[var(--text-primary)]">{p.titulo}</h3>
                 <p className="mt-1 text-[15px] leading-snug text-[var(--text-secondary)]">{p.detalle}</p>
@@ -103,17 +108,17 @@ export function Solucion({
         {antesDespues && (
           <motion.div variants={item} className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="rounded-[var(--radius-card)] bg-[var(--surface-2)] p-5">
-              <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--text-tertiary)]">
+              <p className="text-[12px] font-bold uppercase tracking-[0.08em] text-[var(--text-tertiary)]">
                 {antesDespues.labelAntes}
               </p>
               <p className="mt-2 text-[15px] leading-snug text-[var(--text-secondary)]">{antesDespues.antes}</p>
             </div>
-            {/* El "después" con acento sutil de fondo (4-6%) */}
-            <div className="rounded-[var(--radius-card)] bg-[color-mix(in_oklab,var(--accent)_6%,transparent)] p-5">
-              <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--accent)]">
+            {/* El "después" con acento de marca — pedido explícito: diferenciar con verde + sombra */}
+            <div className="rounded-[var(--radius-card)] border border-[color-mix(in_oklab,var(--accent)_35%,transparent)] bg-[color-mix(in_oklab,var(--accent)_9%,transparent)] p-5 shadow-[0_4px_16px_-6px_color-mix(in_oklab,var(--accent)_35%,transparent)]">
+              <p className="text-[12px] font-bold uppercase tracking-[0.08em] text-[var(--accent)]">
                 {antesDespues.labelDespues}
               </p>
-              <p className="mt-2 text-[15px] font-medium leading-snug text-[var(--text-primary)]">
+              <p className="mt-2 text-[15px] font-semibold leading-snug text-[var(--text-primary)]">
                 {antesDespues.despues}
               </p>
             </div>

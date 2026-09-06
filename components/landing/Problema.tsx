@@ -53,9 +53,9 @@ export function Problema({ titulo, preguntas, id }: ProblemaProps) {
             <motion.li
               key={i}
               variants={item}
-              className="flex items-start gap-4 rounded-[var(--radius-card)] bg-[var(--bg)] p-4 shadow-[var(--shadow-1)]"
+              className="flex items-start gap-4 rounded-[var(--radius-card)] border border-[color-mix(in_oklab,var(--accent)_32%,transparent)] bg-[color-mix(in_oklab,var(--accent)_8%,var(--bg))] p-4 shadow-[0_4px_16px_-6px_color-mix(in_oklab,var(--accent)_30%,transparent)]"
             >
-              <IconChip icon={p.icon} tone="muted" />
+              <IconChip icon={p.icon} tone="accent" />
               <p className="pt-2 text-[17px] font-medium leading-snug text-[var(--text-primary)]">
                 <MarkedCopy text={p.textoMarked} />
               </p>

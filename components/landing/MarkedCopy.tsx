@@ -102,7 +102,10 @@ export function parseMarkedCopy(texto: string): ReactNode[] {
           tipo === 'acento' ? (
             <Accent key={key++}>{hijos}</Accent>
           ) : (
-            <strong key={key++} className="font-semibold">
+            // [b] en verde de marca (pedido explícito) — .cta-final-invert lo revierte a
+            // heredar color en la sección de fondo invertido (ver globals.css), donde el
+            // verde de acento no tiene contraste suficiente contra su propio fondo.
+            <strong key={key++} className="font-bold text-[var(--accent)] [.cta-final-invert_&]:text-inherit">
               {hijos}
             </strong>
           )

@@ -47,7 +47,7 @@ export function CtaFinal({
     <section
       id={id}
       aria-label="Empieza hoy"
-      className="relative overflow-hidden py-20 md:py-24"
+      className="cta-final-invert relative overflow-hidden py-20 md:py-24"
       style={{ background: 'var(--text-primary)' }}
     >
       {/* Profundidad también en el bloque invertido: radial sutil del acento */}

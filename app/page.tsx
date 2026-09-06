@@ -4,7 +4,7 @@
 // de 19-PAGINA-DE-VENTAS.md. Copy marcado trazado a FICHA-AVATAR.md, ver
 // docs/copy/landing.md. Modelo de negocio: onboarding-first (preview anónimo).
 
-import { Utensils, Calculator, Frown, RefreshCw, Leaf, Zap, HeartHandshake } from 'lucide-react';
+import { Utensils, Calculator, Frown, RefreshCw, Leaf, Zap, HeartHandshake, ClipboardList, Sparkles, ThumbsUp } from 'lucide-react';
 import { Hero } from '@/components/landing/Hero';
 import { Problema } from '@/components/landing/Problema';
 import { Agitacion } from '@/components/landing/Agitacion';
@@ -43,23 +43,26 @@ export default function LandingPiski() {
         ctaLabel={CTA_LABEL}
         ctaHref={CTA_HREF}
         socialProof={
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col items-center gap-8">
             {/* Fila de 3 beneficios con ícono — mismo IconChip del kit (44px, mismo borde/forma que Problema/Solución) */}
-            <div className="grid grid-cols-3 gap-3 text-center">
-              <div className="flex flex-col items-center gap-1.5">
+            <div className="grid grid-cols-3 gap-4 text-center">
+              <div className="flex flex-col items-center gap-2">
                 <IconChip icon={Leaf} />
                 <span className="text-[11.5px] font-medium leading-tight text-[var(--text-secondary)]">Comida real mexicana</span>
               </div>
-              <div className="flex flex-col items-center gap-1.5">
+              <div className="flex flex-col items-center gap-2">
                 <IconChip icon={Zap} />
                 <span className="text-[11.5px] font-medium leading-tight text-[var(--text-secondary)]">Decisiones en segundos</span>
               </div>
-              <div className="flex flex-col items-center gap-1.5">
+              <div className="flex flex-col items-center gap-2">
                 <IconChip icon={HeartHandshake} />
                 <span className="text-[11.5px] font-medium leading-tight text-[var(--text-secondary)]">Sin pesar nada</span>
               </div>
             </div>
-            <span>7 días gratis · Garantía de 15 días · cancela cuando quieras</span>
+            {/* Franja de confianza — resaltada en caja redondeada, pedido explícito */}
+            <span className="rounded-[var(--radius-button)] border border-[color-mix(in_oklab,var(--accent)_30%,transparent)] bg-[var(--chip-bg)] px-4 py-2 text-[13px] font-bold text-[var(--accent)]">
+              7 días gratis · Garantía de 15 días · cancela cuando quieras
+            </span>
           </div>
         }
         visual={
@@ -81,9 +84,9 @@ export default function LandingPiski() {
         titulo="¿Te suena?"
         preguntas={[
           { icon: Utensils, textoMarked: '¿Llega la hora de comer y otra vez no sabes qué preparar?' },
-          { icon: Calculator, textoMarked: '¿Sabes cuántas calorías llevas, pero sigues sin saber qué comer?' },
-          { icon: Frown, textoMarked: '¿Sientes que ya perdiste el control del día si comes fuera?' },
-          { icon: RefreshCw, textoMarked: '¿Un día te organizas y al siguiente vuelves a improvisar?' },
+          { icon: Calculator, textoMarked: '¿Sabes cuántas calorías llevas, pero sigues [b]sin saber qué comer[/b]?' },
+          { icon: Frown, textoMarked: '¿Sientes que ya [b]perdiste el control[/b] del día si comes fuera?' },
+          { icon: RefreshCw, textoMarked: '¿Un día te organizas y al siguiente vuelves a [b]improvisar[/b]?' },
         ]}
       />
 
@@ -108,9 +111,9 @@ export default function LandingPiski() {
         mecanismo="el Motor ¿Qué Como Ahora?"
         bigIdeaMarked="No te falta saber qué es saludable — te falta saber [b]qué comer ahora[/b]. El Motor lo resuelve mirando tu objetivo, lo que tienes y tu momento del día."
         pasos={[
-          { titulo: 'Cuéntale tu día', detalle: 'Tu objetivo, lo que tienes en casa y tu presupuesto.' },
-          { titulo: 'El Motor decide', detalle: 'Cruza tu objetivo con lo que ya tienes disponible.' },
-          { titulo: 'Tú eliges', detalle: 'Recibes 2-3 opciones reales — di "me late" o pide otra.' },
+          { titulo: 'Cuéntale tu día', detalle: 'Tu objetivo, lo que tienes en casa y tu presupuesto.', icon: ClipboardList },
+          { titulo: 'El Motor decide', detalle: 'Cruza tu objetivo con lo que ya tienes disponible.', icon: Sparkles },
+          { titulo: 'Tú eliges', detalle: 'Recibes 2-3 opciones reales — di "me late" o pide otra.', icon: ThumbsUp },
         ]}
         antesDespues={{
           labelAntes: 'Antes',
