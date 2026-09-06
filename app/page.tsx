@@ -4,7 +4,7 @@
 // de 19-PAGINA-DE-VENTAS.md. Copy marcado trazado a FICHA-AVATAR.md, ver
 // docs/copy/landing.md. Modelo de negocio: onboarding-first (preview anónimo).
 
-import { Utensils, Calculator, Frown, RefreshCw } from 'lucide-react';
+import { Utensils, Calculator, Frown, RefreshCw, Leaf, Zap, HeartHandshake } from 'lucide-react';
 import { Hero } from '@/components/landing/Hero';
 import { Problema } from '@/components/landing/Problema';
 import { Agitacion } from '@/components/landing/Agitacion';
@@ -42,7 +42,32 @@ export default function LandingPiski() {
         subtitleMarked="Con lo que tienes, tu presupuesto y tu objetivo del día."
         ctaLabel={CTA_LABEL}
         ctaHref={CTA_HREF}
-        socialProof={<span>7 días gratis · Garantía de 15 días · cancela cuando quieras</span>}
+        socialProof={
+          <div className="flex flex-col items-center gap-4">
+            {/* Fila de 3 beneficios con ícono — ancla visual para escanear sin leer (52) */}
+            <div className="grid grid-cols-3 gap-3 text-center">
+              <div className="flex flex-col items-center gap-1.5">
+                <span aria-hidden="true" className="flex size-9 items-center justify-center rounded-full bg-[var(--chip-bg)]">
+                  <Leaf size={16} color="var(--accent)" aria-hidden="true" />
+                </span>
+                <span className="text-[11.5px] font-medium leading-tight text-[var(--text-secondary)]">Comida real mexicana</span>
+              </div>
+              <div className="flex flex-col items-center gap-1.5">
+                <span aria-hidden="true" className="flex size-9 items-center justify-center rounded-full bg-[var(--chip-bg)]">
+                  <Zap size={16} color="var(--accent)" aria-hidden="true" />
+                </span>
+                <span className="text-[11.5px] font-medium leading-tight text-[var(--text-secondary)]">Decisiones en segundos</span>
+              </div>
+              <div className="flex flex-col items-center gap-1.5">
+                <span aria-hidden="true" className="flex size-9 items-center justify-center rounded-full bg-[var(--chip-bg)]">
+                  <HeartHandshake size={16} color="var(--accent)" aria-hidden="true" />
+                </span>
+                <span className="text-[11.5px] font-medium leading-tight text-[var(--text-secondary)]">Sin pesar nada</span>
+              </div>
+            </div>
+            <span>7 días gratis · Garantía de 15 días · cancela cuando quieras</span>
+          </div>
+        }
         visual={
           <div className="flex flex-col gap-4 bg-[var(--bg)] p-4">
             <AnimatedRingDemo />
