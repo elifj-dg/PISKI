@@ -16,6 +16,8 @@ import { Faq } from '@/components/landing/Faq';
 import { CtaFinal } from '@/components/landing/CtaFinal';
 import { FooterLegal } from '@/components/landing/FooterLegal';
 import { StickyCtaMobile } from '@/components/landing/ui';
+import { AnimatedRingDemo } from '@/components/AnimatedRingDemo';
+import { BackToTop } from '@/components/BackToTop';
 
 const CTA_HREF = '/onboarding';
 const CTA_LABEL = 'Quiero saber qué comer ahora';
@@ -33,13 +35,16 @@ export default function LandingPiski() {
         ctaHref={CTA_HREF}
         socialProof={<span>7 días gratis · Garantía de 15 días · cancela cuando quieras</span>}
         visual={
-          <img
-            src="/mockups/home.png"
-            alt="Pantalla principal de Piski: tu día en un vistazo, con el anillo de progreso, tu proteína y calorías restantes, y el botón ¿Qué Como Ahora?"
-            width={750}
-            height={1584}
-            className="h-full w-full object-cover"
-          />
+          <div className="flex flex-col gap-4 bg-[var(--bg)] p-4">
+            <AnimatedRingDemo />
+            <img
+              src="/mockups/home.png"
+              alt="Pantalla principal de Piski: tu día en un vistazo, con el anillo de progreso, tu proteína y calorías restantes, y el botón ¿Qué Como Ahora?"
+              width={750}
+              height={1584}
+              className="w-full rounded-[var(--radius-card)] object-cover"
+            />
+          </div>
         }
       />
 
@@ -202,6 +207,7 @@ export default function LandingPiski() {
       />
 
       <StickyCtaMobile labelComercial={CTA_LABEL} href={CTA_HREF} />
+      <BackToTop />
     </div>
   );
 }

@@ -17,3 +17,10 @@ body {
   color: var(--text-primary);
   font-family: var(--font-body);
 }
+
+/* Foco visible reforzado en toda la app — navegación por teclado (accesibilidad) */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
