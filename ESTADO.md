@@ -85,5 +85,10 @@ App de decisiones de alimentación para México: convierte objetivo + lo que tie
 - `ai_calls`: id, user_id, modelo, tokens_in, tokens_out, costo_usd, created_at — para el kill-switch de gasto de IA (30)
 - Todas con RLS `own_rows`: `using ((select auth.uid()) = user_id) with check (...)`
 
+## Sesión 2 — Identidad visual (en curso)
+- `FICHA-ARTE.md` completa: modo claro derivado del propio moodboard de marca (fondo crema), display Fredoka (proxy real de "Piski Display"), body Inter, acento Maíz + 2ª nota Terracota, radio 20/14/8px, dispositivo ownable = hoja bicolor + blob orgánico sutil.
+- Tour de la app construido y renderizado: `docs/revisiones/piski-tour.html` (Onboarding · Home "¿Qué Como Ahora?" · Paywall · Perfil) — verificado a 375px en navegador, enviado al usuario. Pendiente de aprobación.
+- Nota: la puntuación formal del revisor-visual (/40 usabilidad, /20 craft) se aplica cuando estas pantallas se construyan como código real de producción (Sesiones 3-5) — este tour es la aprobación de DIRECCIÓN visual, no el cierre de pantalla.
+
 ## Siguiente paso
-Sesión 2: identidad visual — aplicar el branding Piski a las pantallas reales del mapa de arriba (no al mockup de recetas). Pendiente de iniciar.
+Esperando aprobación del usuario sobre el tour visual. Tras aprobar: Sesión 3 (página de ventas).

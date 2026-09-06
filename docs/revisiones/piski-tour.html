@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piski — Tour de la app</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F1E6; --surface:#FFFDF7; --sunken:#EFE6D3;
+    --text-1:#0E4D2F; --text-2:#4A5D50;
+    --accent:#F4C430; --accent-2:#E26D56;
+    --success:#4C8B5B; --error:#C4483A; --warn:#E0A72E;
+    --radius-card:20px; --radius-btn:14px; --radius-chip:8px;
+    --ease: cubic-bezier(0.16,1,0.3,1);
+    --spring: cubic-bezier(0.34,1.56,0.64,1);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:#E9E2D2; font-family:'Inter',sans-serif; color:var(--text-1);
+    padding:32px 16px; display:flex; flex-wrap:wrap; gap:28px; justify-content:center;
+  }
+  h1.page-title{ width:100%; text-align:center; font-family:'Fredoka',sans-serif; font-weight:600; font-size:22px; color:var(--text-1); margin:0 0 4px;}
+  p.page-sub{ width:100%; text-align:center; font-size:13px; color:var(--text-2); margin:0 0 12px;}
+  .frame{
+    width:375px; height:812px; background:var(--bg); border-radius:36px; overflow:hidden; position:relative;
+    box-shadow:0 12px 32px rgba(14,77,47,0.18); border:8px solid #1a1a1a; display:flex; flex-direction:column;
+  }
+  .frame-label{
+    width:375px; text-align:center; font-family:'Fredoka',sans-serif; font-size:13px; font-weight:600;
+    color:var(--text-1); margin-bottom:8px; letter-spacing:0.01em;
+  }
+  .col{ display:flex; flex-direction:column; align-items:center; }
+  .screen{
+    flex:1; display:flex; flex-direction:column; min-height:0;
+    background:
+      radial-gradient(ellipse 600px 300px at 50% -10%, rgba(244,196,48,0.10), transparent 60%),
+      var(--bg);
+  }
+  .status-bar{ height:44px; flex-shrink:0; }
+  .content{ flex:1; overflow-y:auto; padding:0 20px 16px; -ms-overflow-style:none; scrollbar-width:none;}
+  .content::-webkit-scrollbar{display:none;}
+
+  /* Typography */
+  .display{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:26px; line-height:1.15; letter-spacing:-0.01em; color:var(--text-1);}
+  .title{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:18px; line-height:1.25; color:var(--text-1);}
+  .body-txt{ font-size:15px; line-height:1.5; color:var(--text-1);}
+  .label{ font-size:12px; font-weight:500; line-height:1.4; color:var(--text-2); text-transform:none;}
+
+  /* Header */
+  .app-header{ display:flex; align-items:center; justify-content:space-between; padding:4px 0 16px; flex-shrink:0;}
+  .logo{ display:flex; align-items:center; gap:8px; }
+  .logo-mark{ width:28px; height:28px; border-radius:8px; background:var(--text-1); position:relative; }
+  .logo-mark::after{ content:''; position:absolute; top:5px; left:9px; width:10px; height:10px; border-radius:50% 50% 50% 0; background:var(--accent-2); transform:rotate(-45deg);}
+  .logo-word{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:16px; color:var(--text-1);}
+  .avatar-chip{ width:34px; height:34px; border-radius:50%; background:var(--sunken); border:1px solid rgba(14,77,47,0.12);}
+
+  /* stagger animation */
+  .stagger > * { opacity:0; transform:translateY(10px); animation: fadeUp 0.5s var(--ease) forwards; }
+  .stagger > *:nth-child(1){animation-delay:.02s} .stagger > *:nth-child(2){animation-delay:.08s}
+  .stagger > *:nth-child(3){animation-delay:.14s} .stagger > *:nth-child(4){animation-delay:.20s}
+  .stagger > *:nth-child(5){animation-delay:.26s} .stagger > *:nth-child(6){animation-delay:.32s}
+  @keyframes fadeUp{ to{ opacity:1; transform:translateY(0);} }
+
+  /* Progress bar (onboarding) */
+  .progress-track{ height:6px; background:var(--sunken); border-radius:99px; overflow:hidden; margin-bottom:24px;}
+  .progress-fill{ height:100%; width:37.5%; background:var(--accent); border-radius:99px; animation:growFill 0.8s var(--ease) forwards; transform-origin:left;}
+  @keyframes growFill{ from{transform:scaleX(0);} to{transform:scaleX(1);} }
+
+  .chip-grid{ display:flex; flex-wrap:wrap; gap:10px; margin-top:20px;}
+  .chip-option{
+    padding:14px 18px; border-radius:var(--radius-chip); background:var(--surface); border:1.5px solid rgba(14,77,47,0.14);
+    font-size:14px; font-weight:500; color:var(--text-1); display:flex; align-items:center; gap:8px; transition:transform 150ms var(--ease);
+  }
+  .chip-option.selected{ background:var(--text-1); color:var(--surface); border-color:var(--text-1);}
+  .chip-option .leaf{ width:14px; height:14px; flex-shrink:0;}
+
+  .btn-primary{
+    width:100%; height:52px; border-radius:var(--radius-btn); background:var(--text-1); color:var(--accent);
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:16px; border:none; display:flex; align-items:center; justify-content:center; gap:8px;
+    transition:transform 120ms var(--ease); box-shadow:0 4px 14px rgba(14,77,47,0.22);
+  }
+  .btn-primary:active{ transform:scale(0.97); }
+  .btn-ghost{
+    width:100%; height:48px; border-radius:var(--radius-btn); background:transparent; color:var(--text-2);
+    font-weight:500; font-size:14px; border:1.5px solid rgba(14,77,47,0.16);
+  }
+
+  /* Bottom nav */
+  .tabbar{
+    height:64px; flex-shrink:0; background:var(--surface); border-top:1px solid rgba(14,77,47,0.08);
+    display:flex; align-items:center; justify-content:space-around; padding-bottom:4px;
+  }
+  .tab{ display:flex; flex-direction:column; align-items:center; gap:4px; color:var(--text-2); }
+  .tab.active{ color:var(--text-1); }
+  .tab svg{ width:22px; height:22px; }
+  .tab-label{ font-size:11px; font-weight:500; }
+
+  /* Hero card - dato clave del dia */
+  .hero-card{
+    background:var(--surface); border-radius:var(--radius-card); padding:22px; margin-top:4px; position:relative; overflow:hidden;
+    box-shadow:0 2px 10px rgba(14,77,47,0.08);
+  }
+  .hero-blob{ position:absolute; top:-40px; right:-40px; width:140px; height:140px; border-radius:50%; background:radial-gradient(circle, rgba(244,196,48,0.18), transparent 70%);}
+  .hero-num{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:38px; color:var(--text-1); font-variant-numeric:tabular-nums; line-height:1;}
+  .ring{ width:64px; height:64px; }
+
+  /* Option card (qué comer ahora) */
+  .option-card{
+    background:var(--surface); border-radius:var(--radius-card); padding:16px; display:flex; gap:14px; align-items:center;
+    box-shadow:0 2px 8px rgba(14,77,47,0.06); border:1px solid rgba(14,77,47,0.06);
+  }
+  .option-thumb{ width:56px; height:56px; border-radius:14px; flex-shrink:0; background:linear-gradient(135deg, var(--accent), #f0d878);}
+  .option-badges{ display:flex; gap:6px; margin-top:6px; flex-wrap:wrap;}
+  .badge{ font-size:11px; font-weight:500; padding:3px 8px; border-radius:6px; background:var(--sunken); color:var(--text-1);}
+  .badge.protein{ background:rgba(244,196,48,0.25); }
+
+  .feedback-row{ display:flex; gap:10px; margin-top:16px; }
+  .feedback-btn{ flex:1; height:46px; border-radius:var(--radius-btn); font-weight:600; font-size:14px; display:flex; align-items:center; justify-content:center; gap:6px;}
+  .feedback-btn.like{ background:var(--text-1); color:var(--accent);}
+  .feedback-btn.other{ background:var(--surface); color:var(--text-1); border:1.5px solid rgba(14,77,47,0.14);}
+
+  .section-divider{ display:flex; align-items:center; gap:8px; margin:22px 0 12px; }
+  .leaf-marker{ width:16px; height:16px; flex-shrink:0; }
+
+  /* Pricing (paywall) */
+  .plan-card{
+    background:var(--surface); border-radius:var(--radius-card); padding:18px; margin-bottom:12px; border:2px solid transparent; position:relative;
+  }
+  .plan-card.recommended{ border-color:var(--accent); background:linear-gradient(180deg, rgba(244,196,48,0.10), var(--surface) 40%); }
+  .plan-badge{ position:absolute; top:-11px; left:16px; background:var(--accent); color:var(--text-1); font-size:11px; font-weight:600; padding:4px 10px; border-radius:99px; font-family:'Fredoka',sans-serif;}
+  .plan-price{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:28px; color:var(--text-1);}
+  .plan-price span{ font-size:14px; font-weight:500; color:var(--text-2); font-family:'Inter',sans-serif;}
+
+  .basics-chip{ display:inline-flex; align-items:center; gap:6px; padding:10px 14px; border-radius:99px; background:var(--surface); border:1px solid rgba(14,77,47,0.12); font-size:13px; font-weight:500; margin:4px 4px 0 0;}
+</style>
+</head>
+<body>
+
+<!-- ONBOARDING -->
+<div class="col">
+  <div class="frame-label">1 · Onboarding — tu objetivo</div>
+  <div class="frame">
+    <div class="screen">
+      <div class="status-bar"></div>
+      <div class="content stagger">
+        <div class="progress-track"><div class="progress-fill"></div></div>
+        <div class="label">Paso 3 de 8</div>
+        <h1 class="display" style="margin-top:8px;">¿Cuál es tu meta con la comida ahora mismo?</h1>
+        <p class="body-txt" style="color:var(--text-2); margin-top:8px;">Elige la que más se parezca a lo tuyo — la puedes ajustar después.</p>
+        <div class="chip-grid">
+          <div class="chip-option selected">
+            <svg class="leaf" viewBox="0 0 24 24" fill="none"><path d="M12 21C7 21 3 17 3 11c0-2 3-8 9-8s9 6 9 8c0 6-4 10-9 10z" fill="currentColor"/></svg>
+            Bajar grasa
+          </div>
+          <div class="chip-option">Ganar músculo</div>
+          <div class="chip-option">Mantener mi peso</div>
+          <div class="chip-option">Solo comer mejor</div>
+        </div>
+        <div class="section-divider">
+          <svg class="leaf-marker" viewBox="0 0 24 24" fill="none"><path d="M12 21C7 21 3 17 3 11c0-2 3-8 9-8s9 6 9 8c0 6-4 10-9 10z" fill="#E26D56"/></svg>
+          <span class="label">¿Ya tienes tus números de tu nutriólogo?</span>
+        </div>
+        <div class="chip-option" style="width:100%; justify-content:space-between;">
+          <span>Sí, ya los tengo — quiero ponerlos yo</span>
+          <span>→</span>
+        </div>
+      </div>
+      <div style="padding:16px 20px 20px; flex-shrink:0;">
+        <button class="btn-primary">Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOME / QUE COMO AHORA -->
+<div class="col">
+  <div class="frame-label">2 · Home — ¿Qué Como Ahora?</div>
+  <div class="frame">
+    <div class="screen">
+      <div class="status-bar"></div>
+      <div class="content stagger">
+        <div class="app-header">
+          <div class="logo"><div class="logo-mark"></div><span class="logo-word">Piski</span></div>
+          <div class="avatar-chip"></div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-blob"></div>
+          <div class="label">Te faltan aproximadamente</div>
+          <div style="display:flex; align-items:baseline; gap:8px; margin-top:4px;">
+            <span class="hero-num">35</span>
+            <span class="title" style="color:var(--text-2); font-weight:500;">g de proteína</span>
+          </div>
+          <div style="display:flex; gap:16px; margin-top:14px;">
+            <div style="flex:1;">
+              <div class="label">Calorías restantes</div>
+              <div class="title">~620 kcal</div>
+            </div>
+            <div style="flex:1;">
+              <div class="label">Próxima comida</div>
+              <div class="title">Comida · 2:30pm</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-divider">
+          <svg class="leaf-marker" viewBox="0 0 24 24" fill="none"><path d="M12 21C7 21 3 17 3 11c0-2 3-8 9-8s9 6 9 8c0 6-4 10-9 10z" fill="#0E4D2F"/></svg>
+          <span class="title" style="font-size:15px;">Con lo que tienes en casa</span>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div class="option-card">
+            <div class="option-thumb"></div>
+            <div style="flex:1; min-width:0;">
+              <div class="title" style="font-size:15px;">Pollo + frijoles + tortillas</div>
+              <div class="option-badges">
+                <span class="badge protein">38g proteína</span>
+                <span class="badge">15 min</span>
+              </div>
+            </div>
+          </div>
+          <div class="option-card">
+            <div class="option-thumb" style="background:linear-gradient(135deg, var(--success), #a8d4b0);"></div>
+            <div style="flex:1; min-width:0;">
+              <div class="title" style="font-size:15px;">Huevos + frijoles + queso panela</div>
+              <div class="option-badges">
+                <span class="badge protein">32g proteína</span>
+                <span class="badge">10 min</span>
+              </div>
+            </div>
+          </div>
+          <div class="option-card">
+            <div class="option-thumb" style="background:linear-gradient(135deg, var(--accent-2), #f0a894);"></div>
+            <div style="flex:1; min-width:0;">
+              <div class="title" style="font-size:15px;">Atún + tostadas + aguacate</div>
+              <div class="option-badges">
+                <span class="badge protein">30g proteína</span>
+                <span class="badge">$45</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="feedback-row">
+          <button class="feedback-btn like">¿Te late? Sí</button>
+          <button class="feedback-btn other">Dame otra</button>
+        </div>
+      </div>
+      <div class="tabbar">
+        <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l8-8 8 8M6 10v10h12V10"/></svg><span class="tab-label">Hoy</span></div>
+        <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span class="tab-label">Historial</span></div>
+        <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span class="tab-label">Perfil</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAYWALL -->
+<div class="col">
+  <div class="frame-label">3 · Paywall</div>
+  <div class="frame">
+    <div class="screen">
+      <div class="status-bar"></div>
+      <div class="content stagger">
+        <div style="text-align:center; padding-top:8px;">
+          <div class="logo-mark" style="margin:0 auto 12px;"></div>
+          <h1 class="display" style="font-size:24px;">Ya viste cómo decide Piski. Ahora hazlo todos los días.</h1>
+          <p class="body-txt" style="color:var(--text-2); margin-top:8px; font-size:14px;">7 días gratis. Cancela cuando quieras.</p>
+        </div>
+
+        <div style="margin-top:22px;">
+          <div class="plan-card recommended">
+            <div class="plan-badge">Mejor valor · 2 meses gratis</div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div class="title" style="font-size:15px;">Anual</div>
+                <div class="plan-price">$82<span>.50/mes</span></div>
+                <div class="label">Se cobra $990/año</div>
+              </div>
+              <div style="width:22px; height:22px; border-radius:50%; background:var(--text-1);"></div>
+            </div>
+          </div>
+          <div class="plan-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div class="title" style="font-size:15px;">Mensual</div>
+                <div class="plan-price">$99<span>/mes</span></div>
+              </div>
+              <div style="width:22px; height:22px; border-radius:50%; border:1.5px solid rgba(14,77,47,0.2);"></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <div class="section-divider" style="margin-top:14px;">
+            <svg class="leaf-marker" viewBox="0 0 24 24" fill="none"><path d="M12 21C7 21 3 17 3 11c0-2 3-8 9-8s9 6 9 8c0 6-4 10-9 10z" fill="#E26D56"/></svg>
+            <span class="label">Lo que desbloqueas</span>
+          </div>
+          <div class="body-txt" style="font-size:14px; display:flex; flex-direction:column; gap:8px;">
+            <div>✓ Meal prep y planes de varios días</div>
+            <div>✓ Lista de compras inteligente</div>
+            <div>✓ Modo rescate completo</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:14px 20px 20px; flex-shrink:0;">
+        <button class="btn-primary">Empezar mi prueba gratis</button>
+        <div class="label" style="text-align:center; margin-top:10px;">Pagas por Hotmart · Tarjeta, PayPal u OXXO</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PERFIL -->
+<div class="col">
+  <div class="frame-label">4 · Perfil — Mis básicos</div>
+  <div class="frame">
+    <div class="screen">
+      <div class="status-bar"></div>
+      <div class="content stagger">
+        <div class="app-header">
+          <h1 class="title">Tu perfil</h1>
+          <div class="avatar-chip"></div>
+        </div>
+
+        <div class="hero-card" style="padding:18px;">
+          <div class="label">Tu plan</div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+            <span class="title">Piski Anual</span>
+            <span class="badge protein">Día 3 de 7</span>
+          </div>
+        </div>
+
+        <div class="section-divider">
+          <svg class="leaf-marker" viewBox="0 0 24 24" fill="none"><path d="M12 21C7 21 3 17 3 11c0-2 3-8 9-8s9 6 9 8c0 6-4 10-9 10z" fill="#0E4D2F"/></svg>
+          <span class="title" style="font-size:15px;">Mis básicos</span>
+        </div>
+        <div>
+          <span class="basics-chip">Huevos</span>
+          <span class="basics-chip">Tortillas</span>
+          <span class="basics-chip">Frijoles</span>
+          <span class="basics-chip">Pollo</span>
+          <span class="basics-chip">Aguacate</span>
+          <span class="basics-chip" style="border-style:dashed; color:var(--text-2);">+ Agregar</span>
+        </div>
+
+        <div class="section-divider">
+          <svg class="leaf-marker" viewBox="0 0 24 24" fill="none"><path d="M12 21C7 21 3 17 3 11c0-2 3-8 9-8s9 6 9 8c0 6-4 10-9 10z" fill="#0E4D2F"/></svg>
+          <span class="title" style="font-size:15px;">Tu objetivo</span>
+        </div>
+        <div class="option-card">
+          <div style="flex:1;">
+            <div class="body-txt">Bajar grasa · 1,850 kcal/día · 140g proteína</div>
+          </div>
+        </div>
+
+        <button class="btn-ghost" style="margin-top:20px;">Cerrar sesión</button>
+      </div>
+      <div class="tabbar">
+        <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l8-8 8 8M6 10v10h12V10"/></svg><span class="tab-label">Hoy</span></div>
+        <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span class="tab-label">Historial</span></div>
+        <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span class="tab-label">Perfil</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
