@@ -95,5 +95,17 @@ App de decisiones de alimentación para México: convierte objetivo + lo que tie
 
 - **Ajuste final aprobado**: fondo cambiado de crema a blanco cálido (#FAFAF7), cards en #FFFFFF con hairline sutil para diferenciarse del fondo. `FICHA-ARTE.md` APROBADA. Identidad visual CERRADA — cosa juzgada para el resto del proyecto.
 
+## Sesión 3 — Página de ventas (código real)
+- **Scaffold instalado**: Next.js 16 (App Router, TypeScript, Tailwind v4, Turbopack) en la raíz del proyecto + `motion` + `lucide-react`. `npx tsc --noEmit` y `npm run build` limpios.
+- **Kit de landing copiado** a `components/landing/` (10 secciones + `ui.tsx` + `MarkedCopy.tsx`) y **tematizado** en `components/landing/tokens.css` con los valores de `FICHA-ARTE.md` (bg #FAFAF7, texto #123D2B, acento #123D2B, radios 20/16px, Fredoka+Inter vía `next/font` en `app/layout.tsx`).
+- **Copy marcado** en `docs/copy/landing.md`, trazado a `FICHA-AVATAR.md`. Big Idea y mecanismo bautizado: **"el Motor ¿Qué Como Ahora?"** (hereda el nombre ya validado del corazón de la app).
+- **Modelo de negocio**: onboarding-first (preview anónimo) — todos los CTA de la landing apuntan a `/onboarding` (stub por ahora, se construye real en Sesión 4).
+- **Bug encontrado y corregido**: en la FICHA-ARTE de Piski, `--accent` = `--text-primary` (mismo verde oscuro, elegido para que los botones CTA fueran verdes). Eso hacía invisible el marcador `[acento]` del kit en la sección CTA Final (fondo invertido) e indistinguible del texto normal en el resto. **Desviación documentada**: se usa `[b]` (negrita) en vez de `[acento]` en todo el copy — visible en cualquier fondo, sin tocar ningún componente del kit. Anotado también en `docs/copy/landing.md`.
+- **Páginas legales stub creadas** (contenido mínimo real, no vacío): `/privacidad`, `/terminos`, `/reembolsos`, `/aviso-ia` — se completan con `47-LEGAL-FISCAL-Y-PRIVACIDAD.md` en Sesión 7. Páginas placeholder: `/onboarding`, `/entrar`.
+- **Carrusel "La app por dentro"**: usa PLACEHOLDERS honestos rotulados (Inicio, ¿Qué Como Ahora?, Modo rescate, Perfil) — la app interna real no existe aún (Sesión 5). Pendiente: reemplazar por screenshots reales al cerrar esa sesión.
+- **Testimonios**: ninguno (regla de <3 reales — correcto no mostrar cards de testimonios en día 1).
+- ⚠️ **Dominio placeholder**: el email de soporte en el footer usa `hola@piski.app` — el usuario debe confirmar el dominio real antes del lanzamiento.
+- Screenshot verificado a 375px con todas las animaciones de scroll-reveal disparadas: `docs/revisiones/landing-375.png`. Revisor-visual independiente invocado (veredicto pendiente de registrar aquí al recibirse).
+
 ## Siguiente paso
-Sesión 3: página de ventas (landing) siguiendo la estructura canónica de 10 secciones, con el copy derivado de FICHA-AVATAR.md y el estilo de FICHA-ARTE.md ya cerrado.
+Esperando el veredicto del revisor-visual sobre la landing. Tras cerrarla: Sesión 4 (onboarding, paywall y login).
