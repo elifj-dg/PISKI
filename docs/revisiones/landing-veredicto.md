@@ -1,14 +1,14 @@
 # VEREDICTO revisor-visual — landing
 Fecha: 2026-09-06 00:00
 Screenshot: docs/revisiones/landing-375.png
-Usabilidad: 34/40
+Usabilidad: 33/40
 Craft: 18/20
 Copy (si vende): 19/20
 Fidelidad (si hubo referencia): N-A
 Veredicto: NO LISTA
 Top defectos:
-1. [Toda la landing] Sigue sin skip-to-content ni anclas rápidas entre secciones — solo se agregó `:focus-visible`, no un mecanismo de salto (heurística 7, hoy 3/4) → agregar enlace "ir al contenido" + anclas de sección navegables por teclado.
-2. [Sección Oferta, cards Anual/Mensual] Anual tiene 4 features y Mensual 3, sin `min-height`/`mt-auto` — en desktop (md:grid-cols-2) las cards y sus CTA quedan a distinta altura (en mobile no se nota por ir apiladas) → igualar alturas para que el desencaje no aparezca al pasar a md/lg.
-3. [Identidad de marca, cuerpo del scroll] El anillo animado ya vive dentro del Hero (defecto de la pasada anterior resuelto), pero el resto de las 9 secciones siguientes vuelve a apoyarse solo en papel cálido + tinta verde sin un segundo dispositivo ownable propio → repetir el anillo o las barras horizontales del stat en al menos una sección más abajo (p.ej. Solución o AppPorDentro) para que la identidad no dependa de un único momento.
-4. [Global] No hay evidencia de ningún patrón de loading/disabled (la landing no tiene formularios ni llamadas async todavía) → cuando se conecte el CTA a un flujo real con validación de red, diseñar el estado de espera desde ahora mismo, no después.
-5. [Sección Hero] El placeholder condicional del visual (rama `else` con ícono de cámara) sigue en el componente aunque hoy no se usa (el mockup real está montado) → si el componente vuelve a quedar sin `visual` en algún cambio futuro, revisar que el placeholder no se cuele a producción sin aviso.
+1. [Skip-link, fixed left-4 top-4, visible al Tab] Apunta a `#hero`, pero ese `id` está en el `<section>` que CONTIENE el propio `<header>` (logo + "Entrar") — el salto no salta nada: el foco secuencial cae igual en el logo/Entrar. El defecto de la pasada anterior (h7) sigue sin resolverse, ahora con apariencia de resuelto → mover el `id`/target a un ancla DESPUÉS del header (el `<h1>` o un `<main id="main-content">`) y apuntar el skip-link ahí.
+2. [app/page.tsx, estructura completa] No existe ningún `<main>` en la página — todo el contenido va suelto entre `<header>` (dentro de Hero) y `<footer>`, sin landmark semántico central → envolver Hero..CtaFinal en `<main id="main-content">` (regla UX #9 + fix natural del defecto 1).
+3. [Sección Oferta, cards Anual/Mensual] Anual con 4 features y Mensual con 3, sin igualar alturas — invisible en el apilado de 375px pero reaparece en `md:grid-cols-2` → normalizar con `min-height` o `mt-auto` en el CTA.
+4. [Identidad de marca, cuerpo del scroll] El único dispositivo ownable (anillo animado) vive solo en el Hero; el resto de las 9 secciones se apoya en papel cálido + tinta verde sin un segundo elemento propio → repetir el anillo/barras en otra sección (Solución o AppPorDentro).
+5. [Hero.tsx, rama `else` del visual] Placeholder dashed con ícono de cámara sigue en el componente aunque hoy no se usa → vigilar que no se cuele a producción si `visual` queda sin pasar en un cambio futuro.
