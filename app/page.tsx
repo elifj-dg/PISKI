@@ -135,6 +135,7 @@ export default function LandingPiski() {
           ctaHref: CTA_HREF,
           features: [
             'El Motor ¿Qué Como Ahora? sin límite',
+            'Modo rescate cuando no sabes qué comer',
             'Cancela cuando quieras',
           ],
         }}

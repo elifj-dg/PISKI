@@ -27,8 +27,15 @@
   --text-secondary: #63705f;
   --text-tertiary: #6f7a6a;   /* ≥4.5:1 sobre --bg/--surface/--surface-2 */
 
-  /* ── MARCA ── */
-  --accent: #123d2b;          /* verde oscuro — acento de ACCIÓN (CTA, chip activo) */
+  /* ── MARCA ──
+     --accent DEBE ser distinto de --text-primary: el kit usa --text-primary como
+     fondo de la sección invertida (CtaFinal) y --accent como fill del botón sobre
+     ESE mismo fondo — si ambos son el mismo hex, el CTA de cierre se funde con su
+     propio fondo (bug real detectado por revisor-visual en 3 pasadas, ver ESTADO.md).
+     Verde medio Piski, distinto del verde casi-negro de --text-primary; blanco
+     sobre --accent da ~5:1 (AA), y --accent sobre --text-primary da contraste
+     perceptible (~2.4:1 de luminancia + el borde/sombra del botón). */
+  --accent: #2f7d52;          /* verde medio — acento de ACCIÓN (CTA, chip activo) */
   --accent-2: #f4c430;        /* maíz — 2ª nota: dato clave, tags, detalle de marca */
 
   /* ── FORMA (radios del brand kit — FICHA-ARTE exige CTA en pastilla completa) ── */

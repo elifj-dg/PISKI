@@ -26,7 +26,7 @@
 
 ## Brand kit final (valores para globals.css)
 - Fondo: #FAFAF7 (blanco cálido, aprobado en ajuste final — no crema) · Superficie: #FFFFFF (cards) · Hundido: #EFE6D3 · Texto 1º: #123D2B · Texto 2º: #63705F
-- Acento de acción (CTA/chip activo/nav activo): #123D2B (verde oscuro, no el maíz) — el maíz #F4C430 y la terracota #E26D56 pasan a acentos secundarios: thumbnails de comida, tags de estado, detalles de marca
+- Acento de acción (CTA/chip activo/nav activo): #2F7D52 (verde medio, no el maíz) — el maíz #F4C430 y la terracota #E26D56 pasan a acentos secundarios: thumbnails de comida, tags de estado, detalles de marca. ⚠️ Ajuste de token del kit de landing (Sesión 3): se separó de #123D2B (Texto 1º) porque el kit invierte fondo/acento en la sección de cierre (fondo = Texto 1º, botón = acento) — con el mismo hex el CTA se fundía con su propio fondo (bug detectado por el revisor-visual en 3 pasadas). Los mockups de la app (`vista-previa-app.html`, ya aprobados) siguen usando #123D2B en sus botones — la landing usa la variante #2F7D52 solo por esta razón técnica de contraste; misma familia de verde, no es un cambio de marca.
 - Semánticos: éxito #3F8F52 (verde medio, barras de progreso y tags positivos) · error #C4483A · aviso #E0A72E
 - Display: Fredoka · Body: Inter · Escala: display 28-32px / title 16-18px / body 14-15px / label 10.5-12px
 - Radio: cards 20-22px · botones/CTA 999px (pastilla completa) · chips 12-14px
