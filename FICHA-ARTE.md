@@ -25,7 +25,7 @@
 - Compilación: spring suave en celebraciones (racha, hito de proteína) · duración base 200-220ms · exclamaciones máx 1/pantalla · radio tendencial 20px en cards, pastilla completa en CTA/chips
 
 ## Brand kit final (valores para globals.css)
-- Fondo: #F7F1E6 (crema) · Superficie: #FFFFFF (cards) · Hundido: #EFE6D3 · Texto 1º: #123D2B · Texto 2º: #63705F
+- Fondo: #FAFAF7 (blanco cálido, aprobado en ajuste final — no crema) · Superficie: #FFFFFF (cards) · Hundido: #EFE6D3 · Texto 1º: #123D2B · Texto 2º: #63705F
 - Acento de acción (CTA/chip activo/nav activo): #123D2B (verde oscuro, no el maíz) — el maíz #F4C430 y la terracota #E26D56 pasan a acentos secundarios: thumbnails de comida, tags de estado, detalles de marca
 - Semánticos: éxito #3F8F52 (verde medio, barras de progreso y tags positivos) · error #C4483A · aviso #E0A72E
 - Display: Fredoka · Body: Inter · Escala: display 28-32px / title 16-18px / body 14-15px / label 10.5-12px
@@ -41,4 +41,4 @@
 - Registro anti-repetición: crema+blanco+verde-oscuro+Fredoka/Inter+anillo de progreso — vetados para el próximo proyecto de este SO
 - Modo (claro/oscuro) DERIVADO por: el propio material de marca y la referencia de producto del usuario — nunca asumido
 
-## Idioma UI: Español (México, tuteo) · Fecha de cierre: 2026-09-06 · Aprobada por el usuario: pendiente (se aprueba junto con el tour de la Ronda 3)
+## Idioma UI: Español (México, tuteo) · Fecha de cierre: 2026-09-06 · Aprobada por el usuario: SÍ (fondo ajustado a blanco cálido #FAFAF7 en el ajuste final)

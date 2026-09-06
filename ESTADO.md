@@ -93,5 +93,7 @@ App de decisiones de alimentación para México: convierte objetivo + lo que tie
 - `vista-previa-app.html` (raíz, marcador `data-kit="abc-v2"` conservado) reconstruido sobre la Ronda 3: Home con anillo · ¿Qué Como Ahora? · Modo rescate · Perfil. Screenshot verificado a 375px: `docs/revisiones/vista-previa-app-375.png`. Enviado al usuario — pendiente de la pregunta del tour (me encanta / ajustar / repensar).
 - Nota: la puntuación formal del revisor-visual (/40 usabilidad, /20 craft) se aplica cuando estas pantallas se construyan como código real de producción (Sesiones 3-5) — este tour es la aprobación de DIRECCIÓN visual, no el cierre de pantalla.
 
+- **Ajuste final aprobado**: fondo cambiado de crema a blanco cálido (#FAFAF7), cards en #FFFFFF con hairline sutil para diferenciarse del fondo. `FICHA-ARTE.md` APROBADA. Identidad visual CERRADA — cosa juzgada para el resto del proyecto.
+
 ## Siguiente paso
-Esperando la respuesta del usuario sobre el tour de la Ronda 3 (`vista-previa-app.html`): me encanta / ajustar un detalle / repensar. Tras aprobar: Sesión 3 (página de ventas).
+Sesión 3: página de ventas (landing) siguiendo la estructura canónica de 10 secciones, con el copy derivado de FICHA-AVATAR.md y el estilo de FICHA-ARTE.md ya cerrado.
