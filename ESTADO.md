@@ -85,22 +85,13 @@ App de decisiones de alimentación para México: convierte objetivo + lo que tie
 - `ai_calls`: id, user_id, modelo, tokens_in, tokens_out, costo_usd, created_at — para el kill-switch de gasto de IA (30)
 - Todas con RLS `own_rows`: `using ((select auth.uid()) = user_id) with check (...)`
 
-## Sesión 2 — Identidad visual (en curso)
-- `FICHA-ARTE.md` completa: modo claro derivado del propio moodboard de marca (fondo crema), display Fredoka (proxy real de "Piski Display"), body Inter, acento Maíz + 2ª nota Terracota, radio 20/14/8px, dispositivo ownable = hoja bicolor + blob orgánico sutil.
-- `vista-previa-app.html` (raíz del proyecto, EL TOUR de 54): Onboarding · Home "¿Qué Como Ahora?" · Paywall · Perfil, con el frame ya tematizado. Screenshot verificado a 375px: `docs/revisiones/vista-previa-app-375.png`. Copia idéntica en `docs/revisiones/piski-tour.html` (mismo contenido, ruta de trabajo). Enviado al usuario — pendiente de la pregunta del tour (me encanta / ajustar / repensar).
+## Sesión 2 — Identidad visual (historial de rondas)
+- **Ronda 1** (agente propone, fondo crema plano): rechazada por el usuario — se sintió genérica.
+- **Ronda 2** (`direcciones-abc.html`, kit `abc-v2`): 3 composiciones en blanco (A Tarjetas Frescas, B Anillo y Resumen, C Lista Editorial). El usuario reaccionó con: le gustó A combinada con el anillo de B, y aportó una referencia propia más completa (Ronda 3).
+- **Ronda 3 — ADOPTADA**: el usuario mandó un spec sheet completo (Home/Dashboard, ¿Qué Como Ahora?, Modo rescate, Perfil, Aprende de ti, Sistema de 5 pasos) con fondo CREMA (no blanco), cards blancas con sombra suave, CTA en pastilla verde oscuro, nav de 5 pestañas, fotografía de comida real. Se tomó como CONTRATO de flujo y craft (protocolo 16), fusionando el anillo de progreso que el usuario pidió explícitamente.
+- `FICHA-ARTE.md` actualizada con los tokens de la Ronda 3 (ver archivo — acento de acción ahora es verde oscuro #123D2B, maíz/terracota pasan a acentos secundarios).
+- `vista-previa-app.html` (raíz, marcador `data-kit="abc-v2"` conservado) reconstruido sobre la Ronda 3: Home con anillo · ¿Qué Como Ahora? · Modo rescate · Perfil. Screenshot verificado a 375px: `docs/revisiones/vista-previa-app-375.png`. Enviado al usuario — pendiente de la pregunta del tour (me encanta / ajustar / repensar).
 - Nota: la puntuación formal del revisor-visual (/40 usabilidad, /20 craft) se aplica cuando estas pantallas se construyan como código real de producción (Sesiones 3-5) — este tour es la aprobación de DIRECCIÓN visual, no el cierre de pantalla.
 
-## Problemas conocidos
-- **vista-previa-app.html desactualizado (falta marcador data-kit="abc-v2")**: el `vista-previa-app.html` actual en la raíz es el tour de la Ronda 1 (fondo crema), escrito antes de que existiera el kit `abc-v2` en este proyecto — por eso no lleva el marcador. El usuario rechazó esa dirección (ver Ronda 2 abajo), así que regenerarlo ahora sería tirar trabajo dos veces. Se pospone a propósito: en cuanto el usuario elija/combine una dirección de `direcciones-abc.html`, se duplica ESE frame ya tematizado (con su marcador `abc-v2` intacto) para reconstruir `vista-previa-app.html` con las 4 vistas del tour, y se re-verifica con screenshot antes de volver a pedir aprobación.
-
-## Sesión 2 — Ronda 2 (el usuario no aprobó el tour crema)
-- Feedback del usuario: no le gustó el fondo crema del primer tour; pidió opciones inspiradas en la competencia (Fitia) con fondo blanco, más limpio y orgánico.
-- Se generó `direcciones-abc.html` (raíz, kit `abc-v2`) con 3 composiciones nuevas — MISMA paleta/tipografía Piski ya aprobada (esto no cambia, es el contrato de marca), solo cambia la composición:
-  - **A — Tarjetas Frescas**: fondo blanco, tarjetas con foto por opción (más parecida a Fitia)
-  - **B — Anillo y Resumen**: fondo blanco, anillo de progreso de proteína + grid 2x2 de datos
-  - **C — Lista Editorial**: fondo casi blanco, sin tarjetas, tipografía grande, terracota como único acento
-- Verificado renderizado (Playwright, 1400px, las 3 columnas), screenshot en `docs/revisiones/direcciones-abc-check.png`. Enviado al usuario. Pendiente de elección (A/B/C/combinación/otra ronda).
-- `vista-previa-app.html` (el tour de 4 pantallas) queda desactualizado hasta que se elija dirección — se regenera con la ganadora antes de re-aprobar la ficha.
-
 ## Siguiente paso
-Esperando que el usuario elija/combine/ajuste entre las 3 opciones de `direcciones-abc.html`. Tras elegir: actualizar FICHA-ARTE.md, regenerar `vista-previa-app.html` con la dirección ganadora, y solo entonces pasar a Sesión 3.
+Esperando la respuesta del usuario sobre el tour de la Ronda 3 (`vista-previa-app.html`): me encanta / ajustar un detalle / repensar. Tras aprobar: Sesión 3 (página de ventas).
