@@ -15,7 +15,7 @@ import { Garantia } from '@/components/landing/Garantia';
 import { Faq } from '@/components/landing/Faq';
 import { CtaFinal } from '@/components/landing/CtaFinal';
 import { FooterLegal } from '@/components/landing/FooterLegal';
-import { StickyCtaMobile } from '@/components/landing/ui';
+import { StickyCtaMobile, IconChip } from '@/components/landing/ui';
 import { AnimatedRingDemo } from '@/components/AnimatedRingDemo';
 import { BackToTop } from '@/components/BackToTop';
 
@@ -44,24 +44,18 @@ export default function LandingPiski() {
         ctaHref={CTA_HREF}
         socialProof={
           <div className="flex flex-col items-center gap-4">
-            {/* Fila de 3 beneficios con ícono — ancla visual para escanear sin leer (52) */}
+            {/* Fila de 3 beneficios con ícono — mismo IconChip del kit (44px, mismo borde/forma que Problema/Solución) */}
             <div className="grid grid-cols-3 gap-3 text-center">
               <div className="flex flex-col items-center gap-1.5">
-                <span aria-hidden="true" className="flex size-9 items-center justify-center rounded-full bg-[var(--chip-bg)]">
-                  <Leaf size={16} color="var(--accent)" aria-hidden="true" />
-                </span>
+                <IconChip icon={Leaf} />
                 <span className="text-[11.5px] font-medium leading-tight text-[var(--text-secondary)]">Comida real mexicana</span>
               </div>
               <div className="flex flex-col items-center gap-1.5">
-                <span aria-hidden="true" className="flex size-9 items-center justify-center rounded-full bg-[var(--chip-bg)]">
-                  <Zap size={16} color="var(--accent)" aria-hidden="true" />
-                </span>
+                <IconChip icon={Zap} />
                 <span className="text-[11.5px] font-medium leading-tight text-[var(--text-secondary)]">Decisiones en segundos</span>
               </div>
               <div className="flex flex-col items-center gap-1.5">
-                <span aria-hidden="true" className="flex size-9 items-center justify-center rounded-full bg-[var(--chip-bg)]">
-                  <HeartHandshake size={16} color="var(--accent)" aria-hidden="true" />
-                </span>
+                <IconChip icon={HeartHandshake} />
                 <span className="text-[11.5px] font-medium leading-tight text-[var(--text-secondary)]">Sin pesar nada</span>
               </div>
             </div>
