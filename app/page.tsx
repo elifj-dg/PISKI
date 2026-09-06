@@ -25,6 +25,14 @@ const CTA_LABEL = 'Quiero saber qué comer ahora';
 export default function LandingPiski() {
   return (
     <div className="min-h-dvh bg-[var(--bg)] text-[var(--text-primary)] [font-family:var(--font-body)]">
+      {/* Skip-link: navegación por teclado — el primer Tab salta directo al contenido */}
+      <a
+        href="#hero"
+        className="fixed left-4 top-4 z-50 -translate-y-24 rounded-[var(--radius-button)] bg-[var(--surface)] px-4 py-3 text-sm font-semibold text-[var(--text-primary)] shadow-[var(--shadow-2)] transition-transform duration-150 focus:translate-y-0"
+      >
+        Ir al contenido principal
+      </a>
+
       {/* 1. HERO */}
       <Hero
         appName="Piski"
