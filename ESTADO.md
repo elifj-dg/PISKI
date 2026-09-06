@@ -1,7 +1,7 @@
-# ESTADO.md — NA'AT (antes "¿Qué Como?")
+# ESTADO.md — Piski (antes "¿Qué Como?" / "NA'AT" / "PiiSKI")
 
 ## Resumen (3 líneas)
-App de decisiones de alimentación para México: convierte objetivo + lo que tienes + presupuesto + momento del día en 2-3 opciones concretas de comida ("¿Qué Como Ahora?"). Validación de mercado hecha (veredicto: excelente oportunidad). Constitución del producto cerrada. Branding (nombre, paleta, tipografía, isotipo) ya aportado por el usuario — pendiente de aplicar a las pantallas reales en Sesión 2.
+App de decisiones de alimentación para México: convierte objetivo + lo que tienes + presupuesto + momento del día en 2-3 opciones concretas de comida ("¿Qué Como Ahora?"). Validación de mercado hecha (veredicto: excelente oportunidad). Constitución del producto cerrada. Branding (nombre, paleta, tipografía, isotipo) definitivo — pendiente de aplicar a las pantallas reales en Sesión 2.
 
 ## Fecha de última actualización
 2026-09-04
@@ -30,14 +30,14 @@ App de decisiones de alimentación para México: convierte objetivo + lo que tie
 - **Localización**: México primero (alimentos, medidas, platillos mexicanos), expansión a LATAM después.
 - **No construir todavía**: Garmin/Strava/Fitbit, Uber Eats/Rappi, precios de súper en tiempo real, comunidad/red social, rutinas de gym, consultas médicas, chat con nutriólogos, reconocimiento visual obligatorio.
 
-## Branding (aportado por el usuario — mandato de marca)
-- **Nombre**: NA'AT (raíz maya, "comprensión/entendimiento"). Verificar disponibilidad de dominio y redes — pendiente del usuario.
-- **Tagline**: "Comida real. Decisiones inteligentes."
-- **Paleta**: Azul Profundo #0B3D3A · Verde Nopal #6BAF45 · Maíz #F7C948 · Chile Coral #F2643B · Crema #FDF6E7
-- **Tipografía**: Display "NA'AT Display Semibold" (moderna, con carácter) + Texto Inter/Plus Jakarta Sans
-- **Isotipo**: tazón con hoja/semilla, con variaciones (fondo sólido, minimal, elemento gráfico suelto)
-- **Elementos gráficos**: hoja, semilla, sol, aguacate, chile, plato
-- ⚠️ El mockup de pantalla que envió el usuario mostraba un flujo de "buscar/explorar recetas" — NO se usa como referencia de flujo. Las pantallas reales (Sesión 2) se diseñan siguiendo el flujo de decisión validado (¿Qué Como Ahora?, modo rescate, ¿te late?), no de búsqueda.
+## Branding (DEFINITIVO — cosa juzgada, aprobado por el usuario)
+- **Nombre**: Piski — de la raíz maya yucateca "p'iis" (medir/medida) + "ki'" (sabroso/agradable) = "medida + sabor". Nombre real, no inventado al azar; corrige el problema de lectura de la primera versión ("PiiSKI"/"NA'AT" no estaban disponibles en dominio/redes).
+- **Tagline**: "Comida real, decisiones inteligentes."
+- **Paleta**: Nopal #0E4D2F · Lima #A7D957 · Crema #F7F1E6 · Maíz #F4C430 · Terracota #E26D56
+- **Tipografía**: Display "Piski Display" (redonda, amigable, con carácter) + texto Inter
+- **Isotipo/App icon**: dos barras redondeadas (verde/crema) con hoja de dos tonos arriba (verde+terracota), variantes en fondo sólido, minimal y círculo
+- **Elementos gráficos**: hoja (ingredientes reales), aguacate (México en cada bocado), maíz (nutrición con conciencia), sol (bienestar), plato (hábitos que suman)
+- ⚠️ Los mockups de pantalla/producto (tote bag, botella, empaque, tarjeta con foto de bowl) son piezas de exploración de marca, NO especificación de pantallas. Las pantallas reales (Sesión 2) se diseñan siguiendo el flujo de decisión validado (¿Qué Como Ahora?, modo rescate, ¿te late?/dame otra), no un feed de búsqueda de recetas.
 
 ## Documentos fuente del usuario (ya leídos y volcados aquí)
 - Resumen fundamental de ¿Qué Como? (PDF) — especificación funcional completa
