@@ -93,5 +93,14 @@ App de decisiones de alimentación para México: convierte objetivo + lo que tie
 ## Problemas conocidos
 - **direcciones-abc**: este proyecto NO generó `direcciones-abc.html` ni `replica-fiel.html` porque no aplicó ninguna de las dos rutas del protocolo 54 — el usuario aportó su propio branding ya cerrado (nombre, paleta, tipografía, isotipo) directamente como archivos de marca, no como una captura de pantalla completa de una app de referencia (eso habría activado réplica fiel) ni como un pedido abierto de "propónme estilos" (eso habría activado A/B/C). La FICHA-ARTE.md documenta la extracción de esos assets de marca como el equivalente funcional de la extracción de referencia. Si en el futuro se pide variar la dirección visual, ahí sí corresponde correr el protocolo A/B/C completo.
 
+## Sesión 2 — Ronda 2 (el usuario no aprobó el tour crema)
+- Feedback del usuario: no le gustó el fondo crema del primer tour; pidió opciones inspiradas en la competencia (Fitia) con fondo blanco, más limpio y orgánico.
+- Se generó `direcciones-abc.html` (raíz, kit `abc-v2`) con 3 composiciones nuevas — MISMA paleta/tipografía Piski ya aprobada (esto no cambia, es el contrato de marca), solo cambia la composición:
+  - **A — Tarjetas Frescas**: fondo blanco, tarjetas con foto por opción (más parecida a Fitia)
+  - **B — Anillo y Resumen**: fondo blanco, anillo de progreso de proteína + grid 2x2 de datos
+  - **C — Lista Editorial**: fondo casi blanco, sin tarjetas, tipografía grande, terracota como único acento
+- Verificado renderizado (Playwright, 1400px, las 3 columnas), screenshot en `docs/revisiones/direcciones-abc-check.png`. Enviado al usuario. Pendiente de elección (A/B/C/combinación/otra ronda).
+- `vista-previa-app.html` (el tour de 4 pantallas) queda desactualizado hasta que se elija dirección — se regenera con la ganadora antes de re-aprobar la ficha.
+
 ## Siguiente paso
-Esperando aprobación del usuario sobre el tour visual (`vista-previa-app.html`). Tras aprobar: Sesión 3 (página de ventas).
+Esperando que el usuario elija/combine/ajuste entre las 3 opciones de `direcciones-abc.html`. Tras elegir: actualizar FICHA-ARTE.md, regenerar `vista-previa-app.html` con la dirección ganadora, y solo entonces pasar a Sesión 3.

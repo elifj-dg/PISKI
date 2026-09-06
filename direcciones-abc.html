@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="es" data-kit="abc-v2">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dirección de arte — 3 opciones para Piski</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background:
+      radial-gradient(1100px 520px at 12% -6%, #f7f7f9, transparent 62%),
+      radial-gradient(900px 460px at 92% 4%, #e2e2e9, transparent 58%),
+      linear-gradient(180deg, #ededf0, #e4e4e9);
+    color: #1c1c1f;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    padding: 32px 20px 64px;
+  }
+  .cabecera { max-width: 1180px; margin: 0 auto 12px; }
+  .cabecera h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.01em; }
+  .cabecera p.sub { margin-top: 6px; font-size: 14px; color: #55555c; max-width: 72ch; }
+  .salidas { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .salidas span {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid #c9c9cf; border-radius: 999px;
+    padding: 6px 12px; font-size: 12.5px; font-weight: 600; color: #3a3a40;
+    background: #f7f7f8;
+  }
+  .salidas b { color: #1c1c1f; }
+  .aviso-fuentes { max-width: 1180px; margin: 10px auto 28px; font-size: 12.5px; color: #6a6a72; }
+  .opciones { max-width: 1180px; margin: 0 auto; display: grid; gap: 40px;
+              grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+  .opcion { display: flex; flex-direction: column; gap: 18px; }
+  .meta { background: #f7f7f8; border: 1px solid #d9d9de; border-radius: 14px; padding: 18px; }
+  .meta .letra {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 8px; font-weight: 800; font-size: 15px;
+    color: #f7f7f8; background: #1c1c1f; margin-right: 8px;
+  }
+  .meta h2 { display: flex; align-items: center; font-size: 17px; font-weight: 700; }
+  .meta .direccion { margin-top: 4px; font-size: 13px; color: #55555c; }
+  .hipotesis { margin-top: 10px; font-size: 13px; line-height: 1.5; color: #3a3a40; }
+  .hipotesis .slot { background: #fff3c7; border-radius: 4px; padding: 1px 4px; font-style: italic; }
+  .meta ul.tokens { margin-top: 10px; list-style: none; font-size: 12px; color: #6a6a72;
+                    font-family: ui-monospace, monospace; line-height: 1.7; }
+  .especimen { margin-top: 12px; border-top: 1px solid #d9d9de; padding-top: 12px; }
+  .especimen .esp-display { font-size: 21px; font-weight: 700; letter-spacing: -0.01em; font-family:'Fredoka',sans-serif; }
+  .especimen .esp-body { margin-top: 4px; font-size: 13.5px; color: #3a3a40; font-family:'Inter',sans-serif; }
+  .paleta { display: flex; gap: 8px; margin-top: 10px; }
+  .paleta span { width: 26px; height: 26px; border-radius: 999px; box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.10), 0 1px 3px rgb(0 0 0 / 0.12); }
+
+  .telefono {
+    width: 310px; margin: 0 auto; aspect-ratio: 9 / 19.5;
+    border: 10px solid #101014; border-radius: 46px;
+    box-shadow: 0 24px 60px rgb(20 18 24 / 0.28);
+    overflow: hidden; position: relative; display: flex; flex-direction: column;
+  }
+  .statusbar { display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 22px 6px; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .statusbar .der { display: flex; align-items: center; gap: 5px; }
+  .home-indicator { position: absolute; bottom: 7px; left: 50%; transform: translateX(-50%);
+    width: 116px; height: 5px; border-radius: 999px; opacity: 0.85; }
+  .pantalla { flex: 1; display: flex; flex-direction: column; overflow: hidden; font-family:'Inter',sans-serif; }
+  .cta { display: flex; align-items: center; justify-content: center; height: 48px; font-size: 15px; font-weight: 600; }
+  .tabbar { display: flex; align-items: stretch; justify-content: space-around;
+    margin: 12px -18px 0; padding: 8px 8px 16px; border-top: 1px solid color-mix(in oklab, var(--text-2) 18%, transparent);
+    background: color-mix(in oklab, var(--surface) 88%, transparent); }
+  .tabbar a { display: flex; flex-direction: column; align-items: center; gap: 3px;
+    font-size: 9.5px; font-weight: 600; color: var(--text-2); text-decoration: none; }
+  .tabbar .tab-chip { display: flex; align-items: center; justify-content: center; width: 36px; height: 26px; border-radius: 9px; }
+  .tabbar a.activa { color: var(--text-1); }
+  .tabbar a.activa .tab-chip { background: color-mix(in oklab, var(--accent) 20%, transparent); }
+  .rotulo-frame { text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: #85858e; margin-top: 2px; }
+  .hero-landing { width: 310px; margin: 6px auto 0; border-radius: 18px; overflow: hidden;
+    border: 1px solid rgb(0 0 0 / 0.10); box-shadow: 0 16px 40px rgb(20 18 24 / 0.16);
+    background: var(--bg); color: var(--text-1); font-family:'Inter',sans-serif; padding: 22px 18px 18px; }
+  .hero-landing .hl-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-1);
+    background: color-mix(in oklab, var(--accent) 22%, transparent);
+    border: 1px solid color-mix(in oklab, var(--accent) 45%, transparent); border-radius: 999px; padding: 4px 10px; }
+  .hero-landing h4 { font-family:'Fredoka',sans-serif; font-size: 23px; font-weight: 700; line-height: 1.16;
+    letter-spacing: -0.01em; margin-top: 10px; }
+  .hero-landing h4 em { font-style: normal; color: var(--text-1); background: color-mix(in oklab, var(--accent) 55%, transparent);
+    padding: 0 4px; border-radius: 4px; }
+  .hero-landing .hl-sub { margin-top: 8px; font-size: 13px; color: var(--text-2); line-height: 1.5; }
+  .hero-landing .hl-sub b { color: var(--text-1); font-weight: 600; }
+  .hero-landing .hl-cta { margin-top: 14px; display: flex; align-items: center; justify-content: center;
+    height: 46px; border-radius: var(--radius-btn); font-size: 14.5px; font-weight: 700; color: var(--text-1);
+    font-family:'Fredoka',sans-serif;
+    background: var(--accent); box-shadow: 0 10px 24px -6px color-mix(in oklab, var(--accent) 55%, transparent); }
+  .hero-landing .hl-prueba { margin-top: 10px; font-size: 11.5px; color: var(--text-2); text-align: center; }
+  .pie { max-width: 1180px; margin: 40px auto 0; font-size: 12.5px; color: #6a6a72;
+    border-top: 1px solid #d0d0d6; padding-top: 14px; line-height: 1.6; }
+
+  /* ============ OPCIÓN A — "Tarjetas frescas" (estilo tracker limpio, cercano a Fitia) ============ */
+  .op-a {
+    --bg:#FEFEFB; --surface:#FFFFFF; --text-1:#0E4D2F; --text-2:#5C6B60;
+    --accent:#F4C430; --radius-card:16px; --radius-btn:14px;
+  }
+  .op-a .telefono{ background:var(--bg); }
+  .op-a .pantalla{ color:var(--text-1); padding:0 18px; }
+  .op-a .statusbar{ color:var(--text-1); }
+  .op-a .home-indicator{ background:var(--text-1); }
+  .op-a .app-header{ display:flex; align-items:center; justify-content:space-between; padding:6px 0 14px;}
+  .op-a .logo-word{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:16px; }
+  .op-a .avatar{ width:32px; height:32px; border-radius:50%; background:#F0F0EC; }
+  .op-a .hero{ background:var(--surface); border:1px solid #ECECE6; border-radius:var(--radius-card);
+    padding:16px; box-shadow:0 2px 10px rgba(14,77,47,0.06); }
+  .op-a .hero .lbl{ font-size:11.5px; font-weight:600; color:var(--text-2); }
+  .op-a .hero .num{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:36px; color:var(--text-1);
+    font-variant-numeric:tabular-nums; line-height:1.05; }
+  .op-a .hero .num small{ font-size:14px; font-weight:600; color:var(--text-2); }
+  .op-a .hero .row2{ display:flex; gap:14px; margin-top:12px; }
+  .op-a .hero .row2 > div{ flex:1; }
+  .op-a .hero .row2 .v{ font-size:14px; font-weight:700; }
+  .op-a .sec-title{ font-size:14px; font-weight:700; margin:16px 0 10px; }
+  .op-a .food-card{ background:var(--surface); border:1px solid #ECECE6; border-radius:var(--radius-card);
+    padding:10px; display:flex; gap:12px; align-items:center; margin-bottom:9px;
+    box-shadow:0 1px 6px rgba(14,77,47,0.05); }
+  .op-a .thumb{ width:52px; height:52px; border-radius:12px; flex-shrink:0; }
+  .op-a .food-card .t{ font-size:14px; font-weight:700; }
+  .op-a .badges{ display:flex; gap:5px; margin-top:5px; }
+  .op-a .badge{ font-size:10.5px; font-weight:600; padding:2px 7px; border-radius:6px; background:#F0F5EE; color:var(--text-1); }
+  .op-a .badge.hi{ background:color-mix(in oklab, var(--accent) 30%, white); }
+  .op-a .feedback{ display:flex; gap:8px; margin-top:6px; }
+  .op-a .fb-btn{ flex:1; height:42px; border-radius:var(--radius-btn); font-size:13px; font-weight:700;
+    display:flex; align-items:center; justify-content:center; }
+  .op-a .fb-btn.yes{ background:var(--text-1); color:var(--accent); }
+  .op-a .fb-btn.no{ background:var(--surface); border:1.5px solid #E2E2DA; color:var(--text-1); }
+
+  /* ============ OPCIÓN B — "Anillo y resumen" (progreso central + grid de datos) ============ */
+  .op-b {
+    --bg:#FBFBF6; --surface:#FFFEFA; --text-1:#0E4D2F; --text-2:#63705F;
+    --accent:#F4C430; --accent2:#E26D56; --radius-card:14px; --radius-btn:12px;
+  }
+  .op-b .telefono{ background:var(--bg); }
+  .op-b .pantalla{ color:var(--text-1); padding:0 18px; font-family:'Inter',sans-serif; }
+  .op-b .statusbar{ color:var(--text-1); }
+  .op-b .home-indicator{ background:var(--text-1); }
+  .op-b .head{ text-align:center; margin-top:10px; }
+  .op-b .head .per{ font-size:11px; font-weight:600; color:var(--text-2); }
+  .op-b .head h3{ font-family:'Fredoka',sans-serif; font-size:19px; font-weight:600; margin-top:2px; }
+  .op-b .ring-wrap{ margin:16px auto 0; position:relative; width:126px; height:126px; }
+  .op-b .ring-wrap .centro{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .op-b .ring-wrap .pct{ font-family:'Fredoka',sans-serif; font-size:26px; font-weight:700; font-variant-numeric:tabular-nums; }
+  .op-b .ring-wrap .pl{ font-size:10px; color:var(--text-2); font-weight:600; }
+  .op-b .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:16px; }
+  .op-b .tile{ background:var(--surface); border:1px solid #EDEBDD; border-radius:var(--radius-card); padding:11px; }
+  .op-b .tile .tl{ font-size:10px; font-weight:600; color:var(--text-2); }
+  .op-b .tile .td{ font-family:'Fredoka',sans-serif; font-size:18px; font-weight:600; margin-top:4px; }
+  .op-b .next-card{ margin-top:14px; background:var(--surface); border:1.5px solid color-mix(in oklab, var(--accent) 45%, transparent);
+    border-radius:var(--radius-card); padding:12px; display:flex; gap:10px; align-items:center; }
+  .op-b .next-card .th{ width:44px; height:44px; border-radius:10px; background:linear-gradient(135deg,var(--accent),#f5e08a); flex-shrink:0;}
+  .op-b .next-card .tt{ font-size:13px; font-weight:700; }
+  .op-b .next-card .ts{ font-size:11px; color:var(--text-2); margin-top:2px; }
+
+  /* ============ OPCIÓN C — "Lista editorial" (tipografía grande, casi sin color, terracota como firma) ============ */
+  .op-c {
+    --bg:#FFFFFB; --surface:#FFFFFF; --text-1:#17311F; --text-2:#6B7268;
+    --accent:#E26D56; --radius-card:0px; --radius-btn:10px;
+  }
+  .op-c .telefono{ background:var(--bg); }
+  .op-c .pantalla{ color:var(--text-1); padding:0 20px; font-family:'Inter',sans-serif; }
+  .op-c .statusbar{ color:var(--text-1); }
+  .op-c .home-indicator{ background:var(--text-1); }
+  .op-c .masthead{ margin-top:12px; border-bottom:2px solid var(--text-1); padding-bottom:10px; }
+  .op-c .masthead .ed{ font-size:10.5px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-2); }
+  .op-c .masthead h3{ font-family:'Fredoka',sans-serif; font-size:24px; font-weight:600; margin-top:3px; line-height:1.1; }
+  .op-c .row{ padding:14px 0; border-bottom:1px solid #ECEAE2; display:flex; justify-content:space-between; align-items:flex-start; }
+  .op-c .row .t{ font-size:15px; font-weight:700; }
+  .op-c .row .s{ font-size:12px; color:var(--text-2); margin-top:3px; }
+  .op-c .row .n{ font-family:'Fredoka',sans-serif; font-size:15px; font-weight:600; color:var(--accent); white-space:nowrap; margin-left:10px; }
+  .op-c .cta-c{ margin-top:16px; border-radius:var(--radius-btn); background:var(--text-1); color:#FFF4EC; font-family:'Fredoka',sans-serif; font-weight:600; }
+</style>
+</head>
+<body>
+
+<header class="cabecera">
+  <h1>Dirección de arte — 3 opciones para Piski</h1>
+  <p class="sub">
+    Mismo branding (paleta, tipografía, nombre) que ya aprobaste — aquí cambia la COMPOSICIÓN:
+    fondo blanco/casi-blanco en las 3, inspiradas en el estilo limpio de trackers como Fitia,
+    sin perder el carácter cálido y mexicano de Piski.
+  </p>
+  <div class="salidas" role="list">
+    <span role="listitem"><b>1 · Elegir</b> A, B o C</span>
+    <span role="listitem"><b>2 · Combinar</b> («la A pero con el anillo de la B»)</span>
+    <span role="listitem"><b>3 · Pedir otras 3</b> direcciones nuevas</span>
+    <span role="listitem"><b>4 · Ajustar un detalle</b> («la A pero con más aire»)</span>
+  </div>
+</header>
+<p class="aviso-fuentes">Las 3 usan tu mismo Fredoka (títulos) + Inter (texto) y tu misma paleta — solo cambia cómo se organiza la pantalla.</p>
+
+<div class="opciones">
+
+  <!-- ═══ OPCIÓN A ═══ -->
+  <section class="opcion op-a" aria-label="Opción A">
+    <div class="meta">
+      <h2><span class="letra">A</span> Tarjetas Frescas</h2>
+      <p class="direccion">La más parecida a Fitia: fondo blanco, tarjetas limpias con foto de cada opción, un solo dato grande arriba. Directo y fácil de escanear con la vista.</p>
+      <p class="hipotesis"><strong>Por qué funciona:</strong> <span class="slot">tu avatar ya conoce este formato de otras apps de tracking — cero curva de aprendizaje, se siente "profesional" desde el primer segundo.</span></p>
+      <ul class="tokens"><li>--bg #FEFEFB · --accent #F4C430</li><li>radius 16/14 · sombra muy sutil</li></ul>
+      <div class="paleta" aria-hidden="true"><span style="background:#FEFEFB;border:1px solid #ddd"></span><span style="background:#FFFFFF;border:1px solid #ddd"></span><span style="background:#0E4D2F"></span><span style="background:#5C6B60"></span><span style="background:#F4C430"></span></div>
+      <div class="especimen"><p class="esp-display">Fredoka — Piski AaBbÑñ 0123</p><p class="esp-body">Inter — Te faltan 35g de proteína. Con lo que tienes en casa...</p></div>
+    </div>
+    <div class="telefono">
+      <div class="statusbar"><span>9:41</span></div>
+      <div class="pantalla">
+        <div class="app-header"><span class="logo-word">Piski</span><div class="avatar"></div></div>
+        <div class="hero">
+          <div class="lbl">Te faltan aproximadamente</div>
+          <div class="num">35<small>g de proteína</small></div>
+          <div class="row2">
+            <div><div class="lbl">Calorías</div><div class="v">~620 kcal</div></div>
+            <div><div class="lbl">Próxima comida</div><div class="v">2:30pm</div></div>
+          </div>
+        </div>
+        <div class="sec-title">Con lo que tienes en casa</div>
+        <div class="food-card"><div class="thumb" style="background:linear-gradient(135deg,#F4C430,#f5e08a)"></div><div><div class="t">Pollo + frijoles + tortillas</div><div class="badges"><span class="badge hi">38g prot</span><span class="badge">15 min</span></div></div></div>
+        <div class="food-card"><div class="thumb" style="background:linear-gradient(135deg,#4C8B5B,#a8d4b0)"></div><div><div class="t">Huevos + frijoles + panela</div><div class="badges"><span class="badge hi">32g prot</span><span class="badge">10 min</span></div></div></div>
+        <div class="feedback"><button class="fb-btn yes">¿Te late?</button><button class="fb-btn no">Dame otra</button></div>
+      </div>
+    </div>
+    <p class="rotulo-frame">Así se vería tu página de ventas</p>
+    <div class="hero-landing">
+      <span class="hl-badge">Piski</span>
+      <h4>Tus objetivos convertidos en <em>comida real</em></h4>
+      <p class="hl-sub"><b>Dime qué tienes, qué te falta y qué quieres.</b> Te digo qué comer, sin pesar nada.</p>
+      <div class="hl-cta">Empezar mi prueba gratis</div>
+      <p class="hl-prueba">7 días gratis · cancela cuando quieras</p>
+    </div>
+  </section>
+
+  <!-- ═══ OPCIÓN B ═══ -->
+  <section class="opcion op-b" aria-label="Opción B">
+    <div class="meta">
+      <h2><span class="letra">B</span> Anillo y Resumen</h2>
+      <p class="direccion">Tu progreso del día primero (un anillo, como un reloj de actividad), y debajo la siguiente comida sugerida. Se siente como "estado de tu día", no solo una lista.</p>
+      <p class="hipotesis"><strong>Por qué funciona:</strong> <span class="slot">refuerza la sensación de logro/control cada vez que abre la app — el anillo se llena, no solo se lee un número.</span></p>
+      <ul class="tokens"><li>--bg #FBFBF6 · --accent #F4C430 / #E26D56</li><li>radius 14/12</li></ul>
+      <div class="paleta" aria-hidden="true"><span style="background:#FBFBF6;border:1px solid #ddd"></span><span style="background:#FFFEFA;border:1px solid #ddd"></span><span style="background:#0E4D2F"></span><span style="background:#F4C430"></span><span style="background:#E26D56"></span></div>
+      <div class="especimen"><p class="esp-display">Fredoka — Piski AaBbÑñ 0123</p><p class="esp-body">Inter — Vas al 68% de tu proteína de hoy.</p></div>
+    </div>
+    <div class="telefono">
+      <div class="statusbar"><span>9:41</span></div>
+      <div class="pantalla">
+        <div class="head"><p class="per">Martes 8 de septiembre</p><h3>Hola, Mariana</h3></div>
+        <div class="ring-wrap">
+          <svg width="126" height="126" viewBox="0 0 126 126"><circle cx="63" cy="63" r="54" fill="none" stroke-width="10" stroke="#F4E9C2"/><circle cx="63" cy="63" r="54" fill="none" stroke-width="10" stroke="#F4C430" stroke-linecap="round" stroke-dasharray="339.3" stroke-dashoffset="108.6" transform="rotate(-90 63 63)"/></svg>
+          <div class="centro"><span class="pct">68%</span><span class="pl">de tu proteína</span></div>
+        </div>
+        <div class="grid2">
+          <div class="tile"><div class="tl">Calorías restantes</div><div class="td">620</div></div>
+          <div class="tile"><div class="tl">Próxima comida</div><div class="td">2:30pm</div></div>
+          <div class="tile"><div class="tl">Racha</div><div class="td">5 días</div></div>
+          <div class="tile"><div class="tl">Entrenas</div><div class="td">7:00pm</div></div>
+        </div>
+        <div class="next-card"><div class="th"></div><div><div class="tt">Pollo + frijoles + tortillas</div><div class="ts">38g proteína · 15 min</div></div></div>
+      </div>
+    </div>
+    <p class="rotulo-frame">Así se vería tu página de ventas</p>
+    <div class="hero-landing">
+      <span class="hl-badge">Piski</span>
+      <h4>Mira tu día <em>llenarse</em>, no solo tus números</h4>
+      <p class="hl-sub"><b>Un vistazo y ya sabes cómo vas.</b> Piski te dice qué falta y qué comer para llegar.</p>
+      <div class="hl-cta">Empezar mi prueba gratis</div>
+      <p class="hl-prueba">7 días gratis · cancela cuando quieras</p>
+    </div>
+  </section>
+
+  <!-- ═══ OPCIÓN C ═══ -->
+  <section class="opcion op-c" aria-label="Opción C">
+    <div class="meta">
+      <h2><span class="letra">C</span> Lista Editorial</h2>
+      <p class="direccion">Casi sin tarjetas ni color — tipografía grande, líneas finas, terracota solo en los números. Se siente como una libreta de comidas cuidada, muy "orgánico y de mercado".</p>
+      <p class="hipotesis"><strong>Por qué funciona:</strong> <span class="slot">el menos "app de IA" de las tres — se lee como algo hecho a mano, refuerza "comida real" sobre "tecnología".</span></p>
+      <ul class="tokens"><li>--bg #FFFFFB · --accent #E26D56</li><li>radius 0 · líneas finas</li></ul>
+      <div class="paleta" aria-hidden="true"><span style="background:#FFFFFB;border:1px solid #ddd"></span><span style="background:#FFFFFF;border:1px solid #ddd"></span><span style="background:#17311F"></span><span style="background:#6B7268"></span><span style="background:#E26D56"></span></div>
+      <div class="especimen"><p class="esp-display">Fredoka — Piski AaBbÑñ 0123</p><p class="esp-body">Inter — Pollo + frijoles + tortillas, 38g de proteína.</p></div>
+    </div>
+    <div class="telefono">
+      <div class="statusbar"><span>9:41</span></div>
+      <div class="pantalla">
+        <div class="masthead"><p class="ed">Martes 8 de septiembre</p><h3>¿Qué como ahora?</h3></div>
+        <div class="row"><div><div class="t">Pollo + frijoles + tortillas</div><div class="s">15 min · en casa</div></div><div class="n">38g</div></div>
+        <div class="row"><div><div class="t">Huevos + frijoles + panela</div><div class="s">10 min · en casa</div></div><div class="n">32g</div></div>
+        <div class="row"><div><div class="t">Atún + tostadas + aguacate</div><div class="s">$45 · rápido</div></div><div class="n">30g</div></div>
+        <button class="cta cta-c">¿Te late? Sí</button>
+      </div>
+    </div>
+    <p class="rotulo-frame">Así se vería tu página de ventas</p>
+    <div class="hero-landing">
+      <span class="hl-badge">Piski</span>
+      <h4>Menos pantalla, <em>más comida real</em></h4>
+      <p class="hl-sub"><b>Sin gráficas que no entiendes.</b> Solo lo que puedes comer ahora, en tus palabras.</p>
+      <div class="hl-cta">Empezar mi prueba gratis</div>
+      <p class="hl-prueba">7 días gratis · cancela cuando quieras</p>
+    </div>
+  </section>
+
+</div>
+
+<footer class="pie">
+  Las 3 opciones comparten paleta y tipografía de Piski (ya aprobadas) — la diferencia es 100%
+  de composición: A = tarjetas con foto (estilo Fitia) · B = anillo de progreso + resumen ·
+  C = lista editorial casi sin color. Elige, combina o pide otra ronda.
+</footer>
+
+</body>
+</html>
