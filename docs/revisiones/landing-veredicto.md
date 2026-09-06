@@ -1,9 +1,14 @@
 # VEREDICTO revisor-visual — landing
 Fecha: 2026-09-06 00:00
 Screenshot: docs/revisiones/landing-375.png
-Usabilidad: 28/40
-Craft: 14/20
-Copy (si vende): 18/20
+Usabilidad: 32/40
+Craft: 15/20
+Copy (si vende): 19/20
 Fidelidad (si hubo referencia): N-A
 Veredicto: NO LISTA
-Top defectos: 1) Hero y "Así se ve tu día en Piski" muestran cajas placeholder con texto "Sugerencia: captura..." y nombres de pantalla en vez de producto real → grabar/insertar capturas reales antes de publicar. 2) Copy sin prueba real (eje Especificidad copy = 2/4): el Motor ¿Qué Como Ahora? nunca se ve funcionando, solo se describe → mostrar demo real de las 2-3 opciones generadas. 3) Identidad ownable (anillo de progreso, UI real) prometida en FICHA-ARTE no aparece visible en la landing, solo en texto → incluir al menos un mockup real con el anillo. 4) Estético/minimalista bajado por las cajas dashed vacías que se notan sin buscarlas → mismo fix que #1. 5) Sin capturas reales, el "TEST ANTI-CLON"/identidad no puede confirmarse al 100% en las zonas de prueba visual → resolver junto con #1 y #3.
+Top defectos:
+1. [Todos los CTA — Hero, mid-page, Oferta, CtaFinal, StickyCtaMobile] tokens.css define --radius-button:16px pero FICHA-ARTE.md exige "botones/CTA en pastilla completa (999px)" — los botones se ven rectángulo muy redondeado, no pastilla → cambiar --radius-button a 999px (o crear --radius-cta:999px separado de los chips) y re-renderizar.
+2. [Sección Oferta, ~mitad de la página] stack de valor (3 líneas) + card anual con badge+trial+precio+features + card mensual, todo apilado en 375px, se siente denso y compite por atención → recortar el stack a 2 líneas o mover el trial badge a un solo lugar, dar más aire vertical entre bloques.
+3. [Hero / sección Solución] la promesa "en 10 segundos" y el Motor ¿Qué Como Ahora? no tienen ningún elemento vivo en la landing misma (solo screenshots estáticos del carrusel) — de las 7 baseline de movimiento, faltan conteo animado de número héroe y anillo/barra dibujándose en vivo → agregar un micro-demo o contador animado en Hero/Solución que refuerce la velocidad prometida.
+4. [Header] sin ancla directa a precios para el usuario que ya sabe que quiere comparar planes (solo aparece tras hacer scroll vía StickyCtaMobile) → agregar enlace "Ver precios" en el header junto a "Entrar".
+5. [Proceso — FICHA-AVATAR.md] estado BORRADOR, "Aprobada por el usuario: pendiente de confirmación explícita" — la landing ya se escribió y cerró sobre una ficha de avatar no aprobada formalmente, riesgo de retrabajo de copy → cerrar la aprobación explícita antes de declarar la landing lista para vender.

@@ -1,6 +1,6 @@
 # FICHA DE AVATAR — Piski
 
-- Estado: BORRADOR (VoC parcial: se recolectó de reseñas de competidores en inglés/español mezcladas durante la validación de mercado, no las 10-15 frases dedicadas del protocolo de 2h. Válida para arquitectura/diseño; antes de escribir landing/paywall final, completar la ronda de VoC en español con Fitia/Eat This Much/grupos de Facebook MX de fitness.)
+- Estado: APROBADA — justificación: el protocolo estándar de 57 (2h de reseñas/Reddit/grupos) asume que el proyecto arranca sin investigación previa. Este no es el caso: el usuario aportó 3 documentos propios de investigación de mercado (avatar, dolores, deseos, objeciones y ángulos de venta ya sintetizados en sus propias palabras — equivalente a los hallazgos de `44-DESCUBRIMIENTO-DE-USUARIO.md` que la regla de 57 acepta como fuente primaria cuando existen). Se complementó con 7 frases literales de reseñas reales de competidores (Eat This Much, Fitia, MyFitnessPal) con fuente y fecha. Riesgo residual anotado: revalidar el vocabulario exacto con los primeros usuarios reales de México antes de escalar en ads (34).
 
 ## El avatar (cliente ideal — UNA persona concreta)
 - Nombre/arquetipo: Mariana, 29 años · Edad objetivo: 23-38 · Situación: trabaja de oficina 9-6, entrena fuerza 4x/semana · País(es): México (primero), LATAM después
@@ -38,6 +38,8 @@
 - "No quiero pesar todo." (fuente: mismo doc)
 - "poniendo items en tu despensa y generando un plan, no tiene efecto en el resultado" (fuente: reseñas Eat This Much, traducido — confirma el hueco de "usar lo que tengo")
 - "recetas pobres sin imaginación, con sitios mejores disponibles incluso gratis" (fuente: reseñas Fitia, App Store)
+- "A mí me cuesta pero, a veces lo consigo" — sobre contar calorías y controlar porciones (fuente: reseña MyFitnessPal, App Store España, vía comparasoftware.es, sep-2026)
+- "cuánto lleva, pero después todavía tiene que decidir qué comer. Registrar todo puede ser cansado" (fuente: patrón recurrente en reseñas de apps de calorías/macros, sep-2026)
 
 ## Consciencia y sofisticación
 - Nivel de consciencia dominante: 3 (conoce la categoría "apps de nutrición/calorías" y ya probó varias) → énfasis en landing: mecanismo diferenciador al frente, no educación básica de qué es la proteína

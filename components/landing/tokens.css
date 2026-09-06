@@ -31,9 +31,9 @@
   --accent: #123d2b;          /* verde oscuro — acento de ACCIÓN (CTA, chip activo) */
   --accent-2: #f4c430;        /* maíz — 2ª nota: dato clave, tags, detalle de marca */
 
-  /* ── FORMA (radios del brand kit) ── */
+  /* ── FORMA (radios del brand kit — FICHA-ARTE exige CTA en pastilla completa) ── */
   --radius-card: 20px;
-  --radius-button: 16px;
+  --radius-button: 999px;
 
   /* ── TIPOGRAFÍA (Piski: Fredoka display + Inter body, cargadas vía next/font en layout.tsx) ── */
   --font-display: var(--font-fredoka), 'Segoe UI', sans-serif;

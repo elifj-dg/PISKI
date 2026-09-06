@@ -58,13 +58,12 @@
 ## 6. OFERTA
 - tituloMarked: `Empieza gratis. Sigue por [b]menos de $3 al día[/b]`
 - trialDias: 7
-- stack:
+- stack (recortado a 2 líneas tras revisión de densidad — ver ESTADO.md):
   - `Piski Pro con el Motor ¿Qué Como Ahora? (12 meses)` — $1,188 (mata: "es caro/no sé si lo voy a usar")
   - `Modo rescate ilimitado para esos días sin plan` — $300 (mata: "no tengo tiempo")
-  - `Meal prep y lista de compras inteligente` — $250 (mata: "gasto de más / desperdicio comida")
-  - totalTachado: $1,738 · nota: `Hoy: $82.50/mes (se cobra $990/año)`
+  - totalTachado: $1,488 · nota: `Hoy: $82.50/mes (se cobra $990/año)`
 - anual: badge `MEJOR VALOR` · precioMes $82.50 · totalAnual `Se cobra $990/año` · ahorro `2 meses gratis` · descomposicionDia `menos de $3 al día` · ctaLabel `Empezar mis 7 días gratis` · features: [`El Motor ¿Qué Como Ahora? sin límite`, `Modo rescate cuando no sabes qué comer`, `Meal prep y lista de compras inteligente`, `Historial de tus comidas y progreso`]
-- mensual: precioMes $99 · ctaLabel `Elegir mensual` · features: [`El Motor ¿Qué Como Ahora? sin límite`, `Modo rescate cuando no sabes qué comer`, `Cancela cuando quieras`]
+- mensual: precioMes $99 · ctaLabel `Elegir mensual` · features: [`El Motor ¿Qué Como Ahora? sin límite`, `Cancela cuando quieras`] (recortado a 2 — plan secundario, menos aire necesario)
 - Traza: FICHA-MERCADO §1 (precio) + deseos tangibles
 
 ## 7. GARANTÍA

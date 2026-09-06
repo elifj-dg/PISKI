@@ -108,9 +108,8 @@ export default function LandingPiski() {
           lineas: [
             { resultado: 'Piski Pro con el Motor ¿Qué Como Ahora? (12 meses)', valor: '$1,188' },
             { resultado: 'Modo rescate ilimitado para esos días sin plan', valor: '$300' },
-            { resultado: 'Meal prep y lista de compras inteligente', valor: '$250' },
           ],
-          totalTachado: '$1,738',
+          totalTachado: '$1,488',
           nota: 'Hoy: $82.50/mes (se cobra $990/año)',
         }}
         anual={{
@@ -136,7 +135,6 @@ export default function LandingPiski() {
           ctaHref: CTA_HREF,
           features: [
             'El Motor ¿Qué Como Ahora? sin límite',
-            'Modo rescate cuando no sabes qué comer',
             'Cancela cuando quieras',
           ],
         }}
