@@ -44,8 +44,46 @@ App de decisiones de alimentación para México: convierte objetivo + lo que tie
 - Propuesta de valor y razones de compra (PDF) — versión C ganadora, 3 razones de compra fuertes (evitar esfuerzo, ahorrar tiempo, ganar comodidad)
 - Que_Como_Cliente_Ideal_Imprimible (PDF) — avatar, dolores, deseos, objeciones, ángulo de venta
 
-## Siguiente paso
-Sesión 1: validación técnica + AVATAR formal + monetización + unit economics + arquitectura + base de datos + auth. Pendiente de iniciar.
+## Fichas del proyecto (memoria persistente — cosa juzgada)
+- `FICHA-AVATAR.md`: BORRADOR (avatar/dolores/deseos confirmados en el reporte de validación; falta ronda dedicada de VoC en español antes de la landing final)
+- `FICHA-MERCADO.md`: precio $99 MXN/mes · $990 MXN/año, trial 7 días, garantía 15 días — completa
+- `FICHA-MODELO.md`: APROBADA — Cal AI como app modelo (revenue probado: $30M/año, adquirida por MyFitnessPal), eje propio: texto/contexto en vez de foto, alimentos mexicanos
+- `FICHA-ARTE.md`: pendiente (se completa en Sesión 2, branding ya definido en la sección de arriba)
 
-## Decisiones técnicas (criterio del agente — no requieren aprobación del usuario)
-(se irán anotando aquí a medida que se tomen en Sesión 1: stack, modelo de datos, método de auth, arquitectura de IA)
+## Monetización (decidido por el agente — matriz A-F de 02C, nicho C: Fitness/Nutrición)
+- **Modelo**: Onboarding + Paywall de prueba (Modelo 2), variante preview anónimo → paywall → login/auth. El usuario vive el "¿Qué Como Ahora?" real ANTES de pedir cuenta; el login solo llega para guardar/desbloquear.
+- **Precio**: $99 MXN/mes · $990 MXN/año (equivalente $82.50/mes, "2 meses gratis") — dentro del rango de mercado (Eat This Much ~$95 MXN/mes, MacroFactor ~$228 MXN/mes), ver FICHA-MERCADO §1.
+- **Trial**: 7 días (el aha es inmediato, no hace falta trial largo) · **Garantía**: 15 días (pasa la regla garantía > prueba).
+- **Gate de unit economics (pasa en ambos escenarios)**:
+  - Venta directa: ingreso neto ~$77 MXN → COGS (IA+infra+email) ~$10.5 MXN → margen ~$66.5 MXN (~86%)
+  - Venta por afiliado (40% recurrente): ingreso neto ~$37.4 MXN → margen ~$26.9 MXN (~72%)
+  - Ambos escenarios pasan el gate de margen sano (>70%). Comisión de afiliado por defecto: 30-40% recurrente.
+- **Créditos de IA**: no aplica — la app es de texto (sin imagen/audio en el MVP), costo de IA insignificante frente al precio.
+
+## Arquitectura y stack (decisión técnica interna — no se le presenta al usuario)
+- **Framework**: Next.js (App Router) — necesita landing + SEO + app en un solo proyecto.
+- **Auth**: Supabase Auth, email/password + Google OAuth. Preview anónimo con estado local hasta el paywall; el login sube esa sesión a cuenta real.
+- **Base de datos**: Supabase Postgres, RLS en toda tabla con política `(select auth.uid()) = user_id`.
+- **IA**: Anthropic Claude vía BFF (nunca en el frontend). Modelo principal Sonnet para "¿Qué Como Ahora?" (streaming, síncrono, <10s); Haiku para clasificar/extraer texto libre ("comí tacos al pastor" → estimación). `AI_MODEL`/`AI_MODEL_FALLBACK` en env vars. Sin imagen/video en el MVP (fase posterior, ver Constitución).
+- **Memoria del usuario**: cada recomendación usa el historial reciente (comidas registradas + "me late"/"dame otra") — el registro de hoy cambia la recomendación de mañana (test de retención de 24 pasado).
+
+## Mapa de pantallas (MVP, 8 pantallas únicas)
+1. Landing (vende el resultado, no la app)
+2. Onboarding (preview anónimo: objetivo, datos básicos, preferencias, restricciones, presupuesto — 6-8 pasos, termina con el primer "¿Qué Como Ahora?" real)
+3. Paywall (tras la primera victoria)
+4. Login/Registro (sube la sesión anónima a cuenta)
+5. Hoy / ¿Qué Como Ahora? (protagonista — home)
+6. Registro de comida + Modo rescate (dentro del home, no pantalla aparte)
+7. Historial/Progreso (proteína/calorías de la semana)
+8. Perfil (Mis básicos, objetivos, plan/suscripción)
+
+## Modelo de datos (Supabase — decisión técnica, no requiere aprobación)
+- `profiles`: user_id (PK/FK auth.users), edad, sexo, estatura, peso, actividad, objetivo, calorias_objetivo, proteina_objetivo, carbos_objetivo, grasas_objetivo, presupuesto, horarios (jsonb), preferencias (jsonb), restricciones (jsonb), plan, trial_ends_at, created_at
+- `mis_basicos`: id, user_id (FK, indexado), alimento, created_at
+- `comidas_registradas`: id, user_id (FK, indexado con created_at), descripcion, proteina_aprox, calorias_aprox, momento (desayuno/comida/cena/snack), fuente (casa/fuera/pedido), created_at
+- `recomendaciones`: id, user_id (FK), contexto (jsonb), opciones (jsonb), elegida, feedback (me_late/dame_otra/no_tengo_eso/etc), created_at — alimenta el aprendizaje de gustos
+- `ai_calls`: id, user_id, modelo, tokens_in, tokens_out, costo_usd, created_at — para el kill-switch de gasto de IA (30)
+- Todas con RLS `own_rows`: `using ((select auth.uid()) = user_id) with check (...)`
+
+## Siguiente paso
+Sesión 2: identidad visual — aplicar el branding Piski a las pantallas reales del mapa de arriba (no al mockup de recetas). Pendiente de iniciar.
