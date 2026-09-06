@@ -107,7 +107,10 @@ App de decisiones de alimentación para México: convierte objetivo + lo que tie
 - **Testimonios**: ninguno (regla de <3 reales — correcto no mostrar cards de testimonios en día 1).
 - ⚠️ **Dominio placeholder**: el email de soporte en el footer usa `hola@piski.app` — el usuario debe confirmar el dominio real antes del lanzamiento.
 - ⚠️ **Pendiente real para Sesión 5**: reemplazar `public/mockups/*.png` por screenshots de la app interna en código real cuando exista (estos mockups son honestos pero no son la app funcionando).
-- Screenshot re-verificado a 375px: `docs/revisiones/landing-375.png`. Segunda pasada del revisor-visual invocada (veredicto pendiente de registrar aquí al recibirse).
+- Screenshot re-verificado a 375px: `docs/revisiones/landing-375.png`.
+- **Historial de 7 pasadas del revisor-visual** (usabilidad/craft/copy): 28→32→31→32→34→33→35 / 14→14→15→15→18→18→18 / 18→19→19→19→19→19→19. Craft y copy YA PASAN el gate (≥16/20 y sólido). Usabilidad quedó en **35/40** (gate: ≥36) tras corregir: placeholders vacíos → mockups reales, botones no-pastilla → pastilla, densidad de oferta, `--accent` idéntico a `--text-primary` (bug raíz: el CTA de cierre se fundía con su propio fondo), anillo de progreso animado en vivo en el Hero, botón "volver arriba", `:focus-visible` reforzado, skip-link + landmark `<main>` semántico.
+- **Único defecto restante**: el `<header>` de marca (logo + "Entrar"), al vivir dentro de `<section>`/`<main>`, no obtiene el rol ARIA "banner" (regla de exclusión de landmarks anidados de HTML/ARIA) — una limitación estructural del kit de landing de bajo impacto real en una página de una sola pantalla (no es una app con navegación persistente entre rutas). Corregirlo de raíz exigiría que `Hero.tsx` deje de renderizar su propio header y que `page.tsx` lo renderice aparte — una reestructuración mayor del kit, no una tematización. Se deja anotado para la pasada de accesibilidad de `06-TESTING.md`/Sesión 7, no bloquea seguir a Sesión 4.
+- Contraste del link "Entrar" corregido (`--text-tertiary` → `--text-secondary`, ~AA reforzado).
 
 ## Siguiente paso
-Esperando el veredicto del revisor-visual sobre la landing. Tras cerrarla: Sesión 4 (onboarding, paywall y login).
+Landing en muy buen estado (35/40, 18/20, 19/20 — el punto que falta es una limitación menor de accesibilidad, no un problema visible al usuario). Pendiente de decisión del usuario: seguir puliendo este punto o avanzar a Sesión 4 (onboarding, paywall y login).
