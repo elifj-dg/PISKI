@@ -8,7 +8,7 @@
 
 import { useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { X, Sparkles, ShieldCheck, Zap, Ban } from 'lucide-react';
+import { X, Sparkles, ShieldCheck, Zap, Ban, Check } from 'lucide-react';
 import { CtaFijo } from './ui';
 
 const PLANES = [
@@ -148,7 +148,7 @@ export function Paywall({
         </p>
       </motion.div>
 
-      <p className="mt-6 text-[12px] text-[var(--text-tertiary)]">Elegimos el anual porque te sale más barato al mes — puedes cambiarlo aquí.</p>
+      <p className="mt-6 text-[12px] text-[var(--text-tertiary)]">Elegimos el anual porque te sale más barato al mes. Toca el plan mensual si lo prefieres.</p>
       <div className="mt-2 flex flex-col gap-3">
         {PLANES.map((plan) => {
           const selected = planId === plan.id;
@@ -161,11 +161,13 @@ export function Paywall({
               style={
                 plan.destacado
                   ? {
-                      borderImage: 'linear-gradient(135deg, var(--accent), color-mix(in oklab, var(--accent) 40%, transparent)) 1',
+                      borderImage: 'linear-gradient(135deg, var(--accent), var(--accent-2)) 1',
                     }
                   : undefined
               }
-              className={`relative flex w-full items-center justify-between rounded-[var(--radius-card)] border px-4 py-3 text-left transition-colors duration-150 [touch-action:manipulation] ${FOCO} ${
+              className={`relative flex w-full items-center gap-3 rounded-[var(--radius-card)] border px-4 py-3 text-left transition-colors duration-150 [touch-action:manipulation] ${FOCO} ${
+                plan.destacado ? 'border-2' : ''
+              } ${
                 selected
                   ? 'border-[var(--accent)] bg-[color-mix(in_oklab,var(--accent)_8%,transparent)] shadow-[0_4px_16px_color-mix(in_oklab,var(--accent)_18%,transparent)]'
                   : 'border-[color-mix(in_oklab,var(--text-tertiary)_25%,transparent)] bg-[var(--surface)]'
@@ -176,7 +178,14 @@ export function Paywall({
                   Mejor valor
                 </span>
               )}
-              <div>
+              <span
+                className={`flex size-5 shrink-0 items-center justify-center rounded-full ${
+                  selected ? 'bg-[var(--accent)]' : 'border border-[color-mix(in_oklab,var(--text-tertiary)_40%,transparent)]'
+                }`}
+              >
+                {selected && <Check size={13} color="var(--bg)" strokeWidth={3} aria-hidden="true" />}
+              </span>
+              <div className="flex-1">
                 <p className="text-[15px] font-semibold text-[var(--text-primary)]">{plan.nombre}</p>
                 <p className="text-[13px] text-[var(--text-secondary)]">{plan.precioTotal}</p>
               </div>

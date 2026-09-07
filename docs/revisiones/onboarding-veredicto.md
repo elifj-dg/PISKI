@@ -1,14 +1,9 @@
 # VEREDICTO revisor-visual — onboarding
 Fecha: 2026-09-06 00:00
 Screenshot: docs/revisiones/onboarding-375.png
-Usabilidad: 32/40
-Craft: 12/20
+Usabilidad: 30/40
+Craft: 14/20
 Copy (si vende): N-A
 Fidelidad (si hubo referencia): N-A
 Veredicto: NO LISTA
-Top defectos:
-1. [Paso "objetivo", debajo del header] Sin dispositivo ownable visible en el paso — los íconos (flama/mancuerna/corazón/hoja) son Lucide genéricos de librería, no hay ningún rasgo de marca (hoja bicolor del isotipo, anillo, textura) → agregar el detalle firma de FICHA-ARTE (hoja bicolor o acento propio) cerca del título o como marca de agua sutil del paso.
-2. [Entre header y título] Persiste un hueco de ~120px entre la barra de progreso y "¿Cuál es tu meta...?" pese al ajuste de PasoTransicion — sigue sintiéndose como espacio muerto antes de la primera pregunta → fijar el bloque de título con un margen superior constante (ej. mt-3) en vez de justify-center, incluso en pasos cortos.
-3. [Chips de opción] Sombra (shadow-1) casi imperceptible sobre el fondo #FAFAF7 — las cards blancas no se distinguen del fondo a simple vista, dando sensación de un solo plano → subir el contraste de superficie/sombra o usar un tinte de fondo ligeramente más oscuro detrás de las cards.
-4. [Riesgo de identidad] La combinación papel cálido (#FAFAF7) + tinta/acento verde oscuro se acerca al arquetipo vetado "Capítulo" (papel cálido + tinta verde) del test anti-clon — la tipografía Fredoka/Inter la distingue de Petrona/Karla, pero conviene reforzar el dispositivo ownable (ítem 1) para alejarla más del patrón.
-5. [Todos los ChipOpcion] Sin navegación por flecha entre opciones (solo Tab nativo) — code review confirma que son `<button>` sin manejo de ArrowUp/Down; mejora menor para uso en desktop/teclado, no crítica en mobile-first.
+Top defectos: 1. [Bajo el link "Ya tengo mis objetivos de mi nutriólogo", hasta el borde inferior] ~220px de vacío muerto sin contenido ni CTA — el fix de quitar `justify-center` en PasoTransicion solo TRASLADÓ el hueco de la mitad de la pantalla al fondo, no lo resolvió → anclar el bloque completo (icono+título+chips+link) con distribución real del alto disponible (ej. `justify-between` con el link pegado a `mt-auto`, o agrandar el bloque del ícono ownable) para que el contenido llene el viewport con intención. 2. [Barra de progreso, header] Con el piso de endowed progress en 5%, el segmento verde es casi imperceptible sobre el riel gris — un usuario no distingue "recién empiezo" de "la barra no cargó" → subir el piso a ~8-10% o reforzar el contraste del segmento inicial. 3. [Chips de opciones: Bajar grasa/Ganar músculo/Mantener/Solo comer mejor] Los íconos (Flame, Dumbbell, Heart, Leaf de Lucide) son genéricos sin tratamiento propio; el único toque de identidad (hoja bicolor) vive solo en el círculo del header → extender el mismo tratamiento de marca a los íconos de los chips, no dejarlo aislado arriba. 4. [Código — paso "compromiso" y chips en general] Sin manejo de teclado (flechas entre chips, Enter en el slider) verificado en page.tsx/ui.tsx — usuarios con teclado dependen 100% de mouse/tap → agregar soporte básico de teclado. 5. [Composición general de la pantalla] Un solo bloque de contenido flota en el tercio superior del viewport mientras el resto queda sin uso — se percibe como pantalla a medio terminar aunque cada elemento esté bien ejecutado individualmente → rediseñar la distribución vertical total del paso, no solo el espaciado interno del título.
