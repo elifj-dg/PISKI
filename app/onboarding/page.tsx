@@ -1,9 +1,14 @@
 'use client';
 
 // Onboarding de Piski — preview anónimo (Modelo 2, ver ESTADO.md): el usuario
-// vive el "¿Qué Como Ahora?" real (aquí: su plan calculado) ANTES de pedir cuenta.
-// Blueprint: docs/sistema/50-DISENO-ONBOARDING-PAYWALL.md (secciones A-C).
-// Copy trazado a FICHA-AVATAR.md — ver comentarios en cada pantalla.
+// vive el "¿Qué Como Ahora?" real (una recomendación de comida concreta, no
+// solo un número de calorías) ANTES de pedir cuenta. Blueprint: docs/sistema/
+// 50-DISENO-ONBOARDING-PAYWALL.md (secciones A-C) + el modelo Cal AI de
+// FICHA-MODELO.md (~20 pasos, cada respuesta cambia el plan). Copy trazado a
+// FICHA-AVATAR.md.
+//
+// Ramificado: quien ya trae sus números de nutriólogo se salta el cálculo
+// corporal; quien elige "solo comer mejor" se salta el peso objetivo.
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -21,18 +26,43 @@ import {
   Beef,
   Wheat,
   ClipboardCheck,
+  HelpCircle,
+  Calculator,
+  ShoppingCart,
+  CalendarDays,
+  UtensilsCrossed,
+  Scale,
+  Home,
+  Shuffle,
+  Zap,
+  ChefHat,
+  Feather,
+  Target,
+  Armchair,
+  Footprints,
+  PersonStanding,
+  HardHat,
 } from 'lucide-react';
 import { FunnelHeader, FunnelScreen, PreguntaTitulo, ChipOpcion, CtaFijo, PasoTransicion, CampoNumero, OpcionesGrupo } from '@/components/onboarding/ui';
-import { calcularPlan, LABEL_OBJETIVO, type Objetivo, type Entrenamiento, type Sexo } from '@/lib/plan';
+import { calcularPlan, LABEL_OBJETIVO, type Objetivo, type Entrenamiento, type Sexo, type ActividadDiaria } from '@/lib/plan';
+import { ordenarRecomendaciones, type BasicoId, type Combo } from '@/lib/recomendaciones';
 import { LoadingPlan } from '@/components/onboarding/LoadingPlan';
 import { Reconocimiento } from '@/components/onboarding/Reconocimiento';
+import { Recomendacion } from '@/components/onboarding/Recomendacion';
 import { Paywall } from '@/components/onboarding/Paywall';
 
 type PasoId =
+  | 'intro'
   | 'objetivo'
   | 'manual'
+  | 'actividad_diaria'
   | 'entrenamiento'
   | 'datos'
+  | 'peso_objetivo'
+  | 'dificultad'
+  | 'estilo_vida'
+  | 'organizacion'
+  | 'precision'
   | 'restricciones'
   | 'presupuesto'
   | 'momento'
@@ -41,6 +71,7 @@ type PasoId =
   | 'compromiso'
   | 'recog2'
   | 'loading'
+  | 'recomendacion'
   | 'paywall';
 
 interface Respuestas {
@@ -48,11 +79,17 @@ interface Respuestas {
   manual: boolean;
   caloriasManual: string;
   proteinaManual: string;
+  actividadDiaria?: ActividadDiaria;
   entrenamiento?: Entrenamiento;
   peso: string;
   estatura: string;
   edad: string;
   sexo?: Sexo;
+  pesoObjetivo: string;
+  dificultad?: string;
+  estiloVida?: string;
+  organizacion?: string;
+  precision?: string;
   restricciones: string[];
   presupuesto?: string;
   momento?: string;
@@ -80,18 +117,39 @@ export default function OnboardingPage() {
     peso: '',
     estatura: '',
     edad: '',
+    pesoObjetivo: '',
     restricciones: [],
     basicos: [],
     compromiso: 5,
   });
+  const [comboElegido, setComboElegido] = useState<Combo | null>(null);
 
   const pasos: PasoId[] = useMemo(() => {
-    const base: PasoId[] = ['objetivo'];
-    if (respuestas.manual) base.push('manual');
-    else base.push('entrenamiento', 'datos');
-    base.push('restricciones', 'presupuesto', 'momento', 'recog1', 'basicos', 'compromiso', 'recog2', 'loading', 'paywall');
+    const base: PasoId[] = ['intro', 'objetivo'];
+    if (respuestas.manual) {
+      base.push('manual');
+    } else {
+      base.push('actividad_diaria', 'entrenamiento', 'datos');
+      if (respuestas.objetivo !== 'comer_mejor') base.push('peso_objetivo');
+    }
+    base.push(
+      'dificultad',
+      'estilo_vida',
+      'organizacion',
+      'precision',
+      'restricciones',
+      'presupuesto',
+      'momento',
+      'recog1',
+      'basicos',
+      'compromiso',
+      'recog2',
+      'loading',
+      'recomendacion',
+      'paywall'
+    );
     return base;
-  }, [respuestas.manual]);
+  }, [respuestas.manual, respuestas.objetivo]);
 
   const [idx, setIdx] = useState(0);
   const pasoActual = pasos[idx];
@@ -123,7 +181,7 @@ export default function OnboardingPage() {
     const peso = Number(respuestas.peso);
     const estatura = Number(respuestas.estatura);
     const edad = Number(respuestas.edad);
-    if (!peso || !estatura || !edad || !respuestas.sexo || !respuestas.entrenamiento) {
+    if (!peso || !estatura || !edad || !respuestas.sexo || !respuestas.entrenamiento || !respuestas.actividadDiaria) {
       return { caloriasObjetivo: 0, proteinaObjetivo: 0 };
     }
     const calc = calcularPlan({
@@ -132,12 +190,18 @@ export default function OnboardingPage() {
       edad,
       sexo: respuestas.sexo,
       entrenamiento: respuestas.entrenamiento,
+      actividadDiaria: respuestas.actividadDiaria,
       objetivo: respuestas.objetivo ?? 'comer_mejor',
     });
     return calc;
   }, [respuestas]);
 
   const totalPreguntasRespondidas = idx; // costo hundido visible en el paywall
+
+  const recomendaciones = useMemo(
+    () => ordenarRecomendaciones(respuestas.basicos as BasicoId[], respuestas.objetivo ?? 'comer_mejor'),
+    [respuestas.basicos, respuestas.objetivo]
+  );
 
   // Conteo animado del número héroe del paso "compromiso" — solo al entrar al
   // paso (no mientras se arrastra el slider, donde debe reflejar el valor al instante).
@@ -161,6 +225,22 @@ export default function OnboardingPage() {
       <FunnelHeader progreso={progreso} onBack={atras} showBack={pasoActual !== 'loading'} />
       <AnimatePresence mode="wait">
         <PasoTransicion stepKey={pasoActual}>
+          {pasoActual === 'intro' && (
+            <div className="flex flex-1 flex-col justify-center text-center">
+              <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--accent)_12%,transparent)] text-[var(--accent)]">
+                <Leaf size={26} aria-hidden="true" />
+              </span>
+              <h1 className="mt-5 text-balance text-[26px] font-bold leading-[1.2] text-[var(--text-primary)] [font-family:var(--font-display)]">
+                Comer mejor no debería significar pensar todo el día qué comer
+              </h1>
+              <p className="mt-3 text-[15px] leading-relaxed text-[var(--text-secondary)]">
+                Vamos a convertir tu objetivo en comida real, según tus gustos, horarios y estilo de vida.
+              </p>
+              <CtaFijo label="Personalizar mi plan" onClick={siguiente} />
+              <p className="mt-3 text-[12px] text-[var(--text-tertiary)]">≈2 minutos</p>
+            </div>
+          )}
+
           {pasoActual === 'objetivo' && (
             <div>
               <span className="flex size-11 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--accent)_12%,transparent)] text-[var(--accent)]">
@@ -217,6 +297,33 @@ export default function OnboardingPage() {
             </div>
           )}
 
+          {pasoActual === 'actividad_diaria' && (
+            <div>
+              <PreguntaTitulo titulo="Fuera del ejercicio, ¿cómo es normalmente tu día?" />
+              <OpcionesGrupo className="mt-6 flex flex-col gap-3">
+                {(
+                  [
+                    ['sentado', 'Principalmente sentado', <Armchair key="i" size={18} />],
+                    ['movimiento', 'Me muevo varias veces al día', <Footprints key="i" size={18} />],
+                    ['de_pie', 'Paso buena parte del día de pie o caminando', <PersonStanding key="i" size={18} />],
+                    ['fisico', 'Mi trabajo es físicamente activo', <HardHat key="i" size={18} />],
+                  ] as [ActividadDiaria, string, React.ReactNode][]
+                ).map(([id, label, icon]) => (
+                  <ChipOpcion
+                    key={id}
+                    label={label}
+                    icon={icon}
+                    selected={respuestas.actividadDiaria === id}
+                    onClick={() => {
+                      setRespuestas((r) => ({ ...r, actividadDiaria: id }));
+                      avanzarConRetraso();
+                    }}
+                  />
+                ))}
+              </OpcionesGrupo>
+            </div>
+          )}
+
           {pasoActual === 'entrenamiento' && (
             <div>
               <PreguntaTitulo titulo="¿Cuántos días entrenas por semana?" />
@@ -254,6 +361,137 @@ export default function OnboardingPage() {
                 disabledHint="Completa sexo, peso, estatura y edad para calcular tu plan"
                 onClick={siguiente}
               />
+            </div>
+          )}
+
+          {pasoActual === 'peso_objetivo' && (
+            <div>
+              <span className="flex size-11 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--accent)_12%,transparent)] text-[var(--accent)]">
+                <Target size={20} aria-hidden="true" />
+              </span>
+              <PreguntaTitulo titulo="¿Tienes un peso en mente?" sub="Opcional — lo usamos solo como referencia, tú decides tu ritmo." />
+              <div className="mt-6">
+                <CampoNumero label="Peso objetivo" unidad="kg" placeholder="65" min={30} max={250} value={respuestas.pesoObjetivo} onChange={(v) => setRespuestas((r) => ({ ...r, pesoObjetivo: v }))} />
+              </div>
+              <CtaFijo label="Continuar" onClick={siguiente} />
+              <button
+                type="button"
+                onClick={() => {
+                  setRespuestas((r) => ({ ...r, pesoObjetivo: '' }));
+                  siguiente();
+                }}
+                className="mt-3 w-full text-center text-[13px] font-medium text-[var(--text-tertiary)] underline underline-offset-2"
+              >
+                Todavía no lo sé
+              </button>
+            </div>
+          )}
+
+          {pasoActual === 'dificultad' && (
+            <div>
+              <PreguntaTitulo titulo="¿Qué es lo que más se te complica?" />
+              <OpcionesGrupo className="mt-6 flex flex-col gap-3">
+                {(
+                  [
+                    ['No sé qué comer', <HelpCircle key="i" size={18} />],
+                    ['Sé mis macros, pero no cómo convertirlos en comida', <Calculator key="i" size={18} />],
+                    ['No sé qué comprar', <ShoppingCart key="i" size={18} />],
+                    ['Quiero organizar varios días', <CalendarDays key="i" size={18} />],
+                    ['Como fuera con frecuencia', <UtensilsCrossed key="i" size={18} />],
+                    ['No quiero pesar absolutamente todo', <Scale key="i" size={18} />],
+                  ] as [string, React.ReactNode][]
+                ).map(([label, icon]) => (
+                  <ChipOpcion
+                    key={label}
+                    label={label}
+                    icon={icon}
+                    selected={respuestas.dificultad === label}
+                    onClick={() => {
+                      setRespuestas((r) => ({ ...r, dificultad: label }));
+                      avanzarConRetraso();
+                    }}
+                  />
+                ))}
+              </OpcionesGrupo>
+            </div>
+          )}
+
+          {pasoActual === 'estilo_vida' && (
+            <div>
+              <PreguntaTitulo titulo="La mayoría de tus comidas son…" />
+              <OpcionesGrupo className="mt-6 flex flex-col gap-3">
+                {(
+                  [
+                    ['En casa', <Home key="i" size={18} />],
+                    ['Fuera de casa', <UtensilsCrossed key="i" size={18} />],
+                    ['Mitad y mitad', <Shuffle key="i" size={18} />],
+                  ] as [string, React.ReactNode][]
+                ).map(([label, icon]) => (
+                  <ChipOpcion
+                    key={label}
+                    label={label}
+                    icon={icon}
+                    selected={respuestas.estiloVida === label}
+                    onClick={() => {
+                      setRespuestas((r) => ({ ...r, estiloVida: label }));
+                      avanzarConRetraso();
+                    }}
+                  />
+                ))}
+              </OpcionesGrupo>
+            </div>
+          )}
+
+          {pasoActual === 'organizacion' && (
+            <div>
+              <PreguntaTitulo titulo="¿Cómo prefieres organizarte?" />
+              <OpcionesGrupo className="mt-6 flex flex-col gap-3">
+                {(
+                  [
+                    ['Decidir en el momento', 'Dime qué comer cuando lo necesite.', <Zap key="i" size={18} />],
+                    ['Planear algunos días', 'Prefiero tener una idea de antemano.', <CalendarDays key="i" size={18} />],
+                    ['Preparar varias comidas', 'Cocino para varios días.', <ChefHat key="i" size={18} />],
+                    ['Una mezcla', '', <Shuffle key="i" size={18} />],
+                  ] as [string, string, React.ReactNode][]
+                ).map(([label, sub, icon]) => (
+                  <ChipOpcion
+                    key={label}
+                    label={sub ? `${label} — ${sub}` : label}
+                    icon={icon}
+                    selected={respuestas.organizacion === label}
+                    onClick={() => {
+                      setRespuestas((r) => ({ ...r, organizacion: label }));
+                      avanzarConRetraso();
+                    }}
+                  />
+                ))}
+              </OpcionesGrupo>
+            </div>
+          )}
+
+          {pasoActual === 'precision' && (
+            <div>
+              <PreguntaTitulo titulo="¿Qué tan preciso quieres ser?" sub="Esto cambia cómo te mostramos las porciones." />
+              <OpcionesGrupo className="mt-6 flex flex-col gap-3">
+                {(
+                  [
+                    ['Simple', 'Piezas, tazas y estimaciones — nada de pesar.', <Feather key="i" size={18} />],
+                    ['Equilibrado', 'Puedo medir algunas cosas.', <Scale key="i" size={18} />],
+                    ['Preciso', 'Quiero registrar gramos y macros.', <Target key="i" size={18} />],
+                  ] as [string, string, React.ReactNode][]
+                ).map(([label, sub, icon]) => (
+                  <ChipOpcion
+                    key={label}
+                    label={`${label} — ${sub}`}
+                    icon={icon}
+                    selected={respuestas.precision === label}
+                    onClick={() => {
+                      setRespuestas((r) => ({ ...r, precision: label }));
+                      avanzarConRetraso();
+                    }}
+                  />
+                ))}
+              </OpcionesGrupo>
             </div>
           )}
 
@@ -406,12 +644,21 @@ export default function OnboardingPage() {
             />
           )}
 
+          {pasoActual === 'recomendacion' && (
+            <Recomendacion
+              combos={recomendaciones}
+              onTeLate={(combo) => setComboElegido(combo)}
+              onContinuar={siguiente}
+            />
+          )}
+
           {pasoActual === 'paywall' && (
             <Paywall
               objetivoLabel={respuestas.objetivo ? LABEL_OBJETIVO[respuestas.objetivo] : 'comer mejor'}
               caloriasObjetivo={plan.caloriasObjetivo}
               proteinaObjetivo={plan.proteinaObjetivo}
               nRespuestas={totalPreguntasRespondidas}
+              comboNombre={comboElegido?.nombre}
               onCerrar={() => router.push('/')}
               onContinuarGratis={() => router.push('/entrar?modo=gratis')}
               onComprar={(planId: string) => router.push(`/entrar?plan=${planId}`)}

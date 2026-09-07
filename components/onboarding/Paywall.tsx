@@ -43,6 +43,7 @@ export function Paywall({
   caloriasObjetivo,
   proteinaObjetivo,
   nRespuestas,
+  comboNombre,
   onCerrar,
   onContinuarGratis,
   onComprar,
@@ -51,6 +52,8 @@ export function Paywall({
   caloriasObjetivo: number;
   proteinaObjetivo: number;
   nRespuestas: number;
+  /** Nombre de la comida que el usuario ya vio y le "latió" en el paso anterior. */
+  comboNombre?: string;
   onCerrar: () => void;
   onContinuarGratis: () => void;
   onComprar: (planId: string) => void;
@@ -105,6 +108,11 @@ export function Paywall({
           Meta diaria: <strong className="text-[var(--accent)]">{caloriasObjetivo} kcal</strong> ·{' '}
           <strong className="text-[var(--accent)]">{proteinaObjetivo}g</strong> de proteína
         </p>
+        {comboNombre && (
+          <p className="mt-1 text-[13px] leading-snug text-[var(--text-tertiary)]">
+            Y ya viste tu primera opción: <strong className="text-[var(--text-secondary)]">{comboNombre}</strong>
+          </p>
+        )}
       </motion.div>
 
       <motion.ul

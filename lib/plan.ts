@@ -5,6 +5,8 @@
 export type Objetivo = 'bajar_grasa' | 'ganar_musculo' | 'mantener' | 'comer_mejor';
 export type Entrenamiento = '0-1' | '2-3' | '4-5' | '6-7';
 export type Sexo = 'M' | 'F';
+/** NEAT — movimiento fuera del ejercicio formal (independiente de si entrena). */
+export type ActividadDiaria = 'sentado' | 'movimiento' | 'de_pie' | 'fisico';
 
 const FACTOR_ACTIVIDAD: Record<Entrenamiento, number> = {
   '0-1': 1.3,
@@ -13,12 +15,21 @@ const FACTOR_ACTIVIDAD: Record<Entrenamiento, number> = {
   '6-7': 1.75,
 };
 
+/** Modificador aditivo por NEAT — pequeño a propósito, el eje que más pesa sigue siendo el ejercicio. */
+const MODIFICADOR_ACTIVIDAD_DIARIA: Record<ActividadDiaria, number> = {
+  sentado: 0,
+  movimiento: 0.03,
+  de_pie: 0.06,
+  fisico: 0.1,
+};
+
 export interface DatosPlan {
   peso: number; // kg
   estatura: number; // cm
   edad: number;
   sexo: Sexo;
   entrenamiento: Entrenamiento;
+  actividadDiaria: ActividadDiaria;
   objetivo: Objetivo;
 }
 
@@ -38,7 +49,8 @@ export function calcularPlan(d: DatosPlan): PlanCalculado {
       ? 10 * d.peso + 6.25 * d.estatura - 5 * d.edad + 5
       : 10 * d.peso + 6.25 * d.estatura - 5 * d.edad - 161;
 
-  const mantenimiento = Math.round(bmr * FACTOR_ACTIVIDAD[d.entrenamiento]);
+  const factor = FACTOR_ACTIVIDAD[d.entrenamiento] + MODIFICADOR_ACTIVIDAD_DIARIA[d.actividadDiaria];
+  const mantenimiento = Math.round(bmr * factor);
 
   const ajusteObjetivo: Record<Objetivo, number> = {
     bajar_grasa: -0.2,
