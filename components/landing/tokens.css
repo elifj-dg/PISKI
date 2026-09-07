@@ -52,6 +52,9 @@
 
   /* ── DERIVADOS (no se tocan: se recalculan solos desde --accent) ── */
   --chip-bg: color-mix(in oklab, var(--accent) 10%, transparent);
+
+  /* ── SEMÁNTICO (solo en su función: errores de formulario/estados de fallo) ── */
+  --danger: #b3261e;
 }
 
 /* ============================================================================
