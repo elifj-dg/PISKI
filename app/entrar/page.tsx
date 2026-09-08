@@ -1,17 +1,18 @@
 'use client';
 
 // PANTALLA E — Entrar (26-AUTH-MODERNO.md: magic link/OTP como método PRIMARIO,
-// Google OAuth como mejora secundaria; nunca contraseña). El envío real del
-// enlace se conecta en Sesión 5 (servicios externos / Supabase) — esta
-// pantalla ya resuelve los 3 estados y el contexto de plan/gratis heredado
-// del paywall.
+// Google OAuth como mejora secundaria; nunca contraseña). Conectada a
+// Supabase Auth real (Sesión 5) — el enlace vuelve a /auth/callback, que
+// intercambia el código por sesión y manda a /app.
 
 import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
 import { Mail, CheckCircle2, AlertCircle, ArrowLeft } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
 
 type Estado = 'idle' | 'enviando' | 'enviado' | 'error';
+type TipoError = 'formato' | 'envio' | null;
 
 function GoogleIcon() {
   return (
@@ -31,6 +32,8 @@ function EntrarContent() {
 
   const [email, setEmail] = useState('');
   const [estado, setEstado] = useState<Estado>('idle');
+  const [tipoError, setTipoError] = useState<TipoError>(null);
+  const [enviandoGoogle, setEnviandoGoogle] = useState(false);
 
   const contexto = plan === 'anual'
     ? 'Elegiste el plan anual — entra para activar tus 7 días gratis.'
@@ -41,14 +44,45 @@ function EntrarContent() {
     : 'Entra para ver tu plan y empezar hoy.';
 
   const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const siguiente = plan ? `/app?plan=${plan}` : '/app';
 
-  const enviar = () => {
+  const enviar = async () => {
     if (!emailValido) {
+      setTipoError('formato');
       setEstado('error');
       return;
     }
     setEstado('enviando');
-    window.setTimeout(() => setEstado('enviado'), 1100);
+    const supabase = createClient();
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: `${window.location.origin}/auth/callback?siguiente=${encodeURIComponent(siguiente)}`,
+      },
+    });
+    if (error) {
+      setTipoError('envio');
+      setEstado('error');
+      return;
+    }
+    setEstado('enviado');
+  };
+
+  const entrarConGoogle = async () => {
+    setEnviandoGoogle(true);
+    const supabase = createClient();
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback?siguiente=${encodeURIComponent(siguiente)}`,
+      },
+    });
+    if (error) {
+      setEnviandoGoogle(false);
+      setTipoError('envio');
+      setEstado('error');
+    }
+    // Si no hay error, el navegador ya está siendo redirigido a Google.
   };
 
   return (
@@ -72,10 +106,12 @@ function EntrarContent() {
 
               <button
                 type="button"
-                className="mt-8 flex h-14 w-full items-center justify-center gap-3 rounded-[var(--radius-button)] border border-[color-mix(in_oklab,var(--text-tertiary)_28%,transparent)] bg-[var(--surface)] text-[15px] font-semibold text-[var(--text-primary)] [touch-action:manipulation]"
+                onClick={entrarConGoogle}
+                disabled={enviandoGoogle}
+                className="mt-8 flex h-14 w-full items-center justify-center gap-3 rounded-[var(--radius-button)] border border-[color-mix(in_oklab,var(--text-tertiary)_28%,transparent)] bg-[var(--surface)] text-[15px] font-semibold text-[var(--text-primary)] [touch-action:manipulation] disabled:opacity-50"
               >
                 <GoogleIcon />
-                Continuar con Google
+                {enviandoGoogle ? 'Llevándote a Google…' : 'Continuar con Google'}
               </button>
 
               <div className="my-5 flex items-center gap-3">
@@ -100,7 +136,10 @@ function EntrarContent() {
                     placeholder="tucorreo@ejemplo.com"
                     onChange={(e) => {
                       setEmail(e.target.value);
-                      if (estado === 'error') setEstado('idle');
+                      if (estado === 'error') {
+                        setEstado('idle');
+                        setTipoError(null);
+                      }
                     }}
                     className="h-14 w-full bg-transparent text-[16px] text-[var(--text-primary)] outline-none placeholder:text-[var(--text-tertiary)]"
                   />
@@ -108,7 +147,9 @@ function EntrarContent() {
                 {estado === 'error' && (
                   <span className="mt-1.5 flex items-center gap-1.5 text-[12px] font-medium text-[var(--danger)]">
                     <AlertCircle size={13} aria-hidden="true" />
-                    Escribe un correo válido para poder enviarte el enlace.
+                    {tipoError === 'envio'
+                      ? 'No pudimos enviarte el enlace. Inténtalo de nuevo en un momento.'
+                      : 'Escribe un correo válido para poder enviarte el enlace.'}
                   </span>
                 )}
               </label>

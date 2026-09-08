@@ -45,6 +45,7 @@ import {
 } from 'lucide-react';
 import { FunnelHeader, FunnelScreen, PreguntaTitulo, ChipOpcion, CtaFijo, PasoTransicion, CampoNumero, OpcionesGrupo } from '@/components/onboarding/ui';
 import { calcularPlan, LABEL_OBJETIVO, type Objetivo, type Entrenamiento, type Sexo, type ActividadDiaria } from '@/lib/plan';
+import { guardarOnboarding } from '@/lib/onboardingStorage';
 import { ordenarRecomendaciones, type BasicoId, type Combo } from '@/lib/recomendaciones';
 import { LoadingPlan } from '@/components/onboarding/LoadingPlan';
 import { Reconocimiento } from '@/components/onboarding/Reconocimiento';
@@ -197,6 +198,31 @@ export default function OnboardingPage() {
   }, [respuestas]);
 
   const totalPreguntasRespondidas = idx; // costo hundido visible en el paywall
+
+  // Puente anónimo → cuenta (Modelo 2): se guarda justo antes de mandar a
+  // /entrar; /app lo sube a Supabase apenas exista sesión real.
+  const guardarRespuestas = () => {
+    guardarOnboarding({
+      objetivo: respuestas.objetivo,
+      actividadDiaria: respuestas.actividadDiaria,
+      entrenamiento: respuestas.entrenamiento,
+      peso: respuestas.peso,
+      estatura: respuestas.estatura,
+      edad: respuestas.edad,
+      sexo: respuestas.sexo,
+      pesoObjetivo: respuestas.pesoObjetivo,
+      dificultad: respuestas.dificultad,
+      estiloVida: respuestas.estiloVida,
+      organizacion: respuestas.organizacion,
+      precision: respuestas.precision,
+      restricciones: respuestas.restricciones,
+      presupuesto: respuestas.presupuesto,
+      basicos: respuestas.basicos,
+      compromiso: respuestas.compromiso,
+      caloriasObjetivo: plan.caloriasObjetivo,
+      proteinaObjetivo: plan.proteinaObjetivo,
+    });
+  };
 
   const recomendaciones = useMemo(
     () => ordenarRecomendaciones(respuestas.basicos as BasicoId[], respuestas.objetivo ?? 'comer_mejor'),
@@ -660,8 +686,14 @@ export default function OnboardingPage() {
               nRespuestas={totalPreguntasRespondidas}
               comboNombre={comboElegido?.nombre}
               onCerrar={() => router.push('/')}
-              onContinuarGratis={() => router.push('/entrar?modo=gratis')}
-              onComprar={(planId: string) => router.push(`/entrar?plan=${planId}`)}
+              onContinuarGratis={() => {
+                guardarRespuestas();
+                router.push('/entrar?modo=gratis');
+              }}
+              onComprar={(planId: string) => {
+                guardarRespuestas();
+                router.push(`/entrar?plan=${planId}`);
+              }}
             />
           )}
         </PasoTransicion>
