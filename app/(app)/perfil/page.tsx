@@ -4,7 +4,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { LABEL_OBJETIVO } from '@/lib/plan';
 import { CerrarSesionButton } from '@/components/app/CerrarSesionButton';
-import { Flame, Beef, ShoppingBasket } from 'lucide-react';
+import { Flame, Beef, ShoppingBasket, Ruler, Weight, Calendar } from 'lucide-react';
 
 export default async function PerfilPage() {
   const supabase = await createClient();
@@ -46,6 +46,39 @@ export default async function PerfilPage() {
             <div>
               <p className="text-[15px] font-bold text-[var(--text-primary)]">{perfil?.proteina_objetivo ?? '—'}g</p>
               <p className="text-[11px] text-[var(--text-tertiary)]">proteína/día</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-4 rounded-[var(--radius-card)] bg-[var(--surface)] p-5 shadow-[var(--shadow-1)]">
+        <p className="text-[13px] font-semibold text-[var(--text-secondary)]">Tu cuerpo</p>
+        <div className="mt-4 flex gap-4">
+          <div className="flex items-center gap-2">
+            <span className="flex size-9 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--accent)_10%,transparent)] text-[var(--accent)]">
+              <Calendar size={16} aria-hidden="true" />
+            </span>
+            <div>
+              <p className="text-[15px] font-bold text-[var(--text-primary)]">{perfil?.edad ?? '—'}</p>
+              <p className="text-[11px] text-[var(--text-tertiary)]">años</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="flex size-9 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--accent)_10%,transparent)] text-[var(--accent)]">
+              <Ruler size={16} aria-hidden="true" />
+            </span>
+            <div>
+              <p className="text-[15px] font-bold text-[var(--text-primary)]">{perfil?.estatura ?? '—'}</p>
+              <p className="text-[11px] text-[var(--text-tertiary)]">cm</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="flex size-9 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--accent)_10%,transparent)] text-[var(--accent)]">
+              <Weight size={16} aria-hidden="true" />
+            </span>
+            <div>
+              <p className="text-[15px] font-bold text-[var(--text-primary)]">{perfil?.peso ?? '—'}</p>
+              <p className="text-[11px] text-[var(--text-tertiary)]">kg</p>
             </div>
           </div>
         </div>
