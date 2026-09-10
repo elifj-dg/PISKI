@@ -18,6 +18,8 @@ export default async function PerfilPage() {
   ]);
 
   const objetivoLabel = perfil?.objetivo ? LABEL_OBJETIVO[perfil.objetivo as keyof typeof LABEL_OBJETIVO] : 'Sin definir';
+  const preferencias = (perfil?.preferencias as { pesoObjetivo?: string | null } | null) ?? null;
+  const pesoObjetivo = preferencias?.pesoObjetivo ? Number(preferencias.pesoObjetivo) : null;
 
   return (
     <div className="flex flex-1 flex-col px-5 pt-6 pb-6">
@@ -78,10 +80,15 @@ export default async function PerfilPage() {
             </span>
             <div>
               <p className="text-[15px] font-bold text-[var(--text-primary)]">{perfil?.peso ?? '—'}</p>
-              <p className="text-[11px] text-[var(--text-tertiary)]">kg</p>
+              <p className="text-[11px] text-[var(--text-tertiary)]">kg actual</p>
             </div>
           </div>
         </div>
+        {pesoObjetivo && (
+          <p className="mt-4 text-[13px] text-[var(--text-secondary)]">
+            Tu meta de peso: <span className="font-bold text-[var(--text-primary)]">{pesoObjetivo}kg</span>
+          </p>
+        )}
       </div>
 
       <div className="mt-4 rounded-[var(--radius-card)] bg-[var(--surface)] p-5 shadow-[var(--shadow-1)]">
