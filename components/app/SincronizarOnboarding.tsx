@@ -2,7 +2,7 @@
 
 // Sube las respuestas guardadas en localStorage (durante el onboarding
 // anónimo) a la cuenta recién creada, una sola vez. Se ejecuta apenas el
-// usuario llega a /app con sesión real.
+// usuario entra al área autenticada con sesión real (app/(app)/layout.tsx).
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -28,7 +28,7 @@ export function SincronizarOnboarding() {
       })
       .catch(() => {
         // Sin conexión o falla del servidor — las respuestas quedan en
-        // localStorage y se reintenta la próxima vez que cargue /app.
+        // localStorage y se reintenta la próxima vez que cargue el área autenticada.
       });
   }, [router]);
 

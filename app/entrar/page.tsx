@@ -44,7 +44,7 @@ function EntrarContent() {
     : 'Entra para ver tu plan y empezar hoy.';
 
   const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const siguiente = plan ? `/app?plan=${plan}` : '/app';
+  const siguiente = plan ? `/hoy?plan=${plan}` : '/hoy';
 
   const enviar = async () => {
     if (!emailValido) {
