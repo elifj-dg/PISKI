@@ -24,6 +24,7 @@ export function Motor({ combos, sinBasicos, rescate }: { combos: Combo[]; sinBas
   const [idx, setIdx] = useState(0);
   const [elegido, setElegido] = useState(false);
   const [guardando, setGuardando] = useState(false);
+  const [errorGuardado, setErrorGuardado] = useState(false);
   const reduce = useReducedMotion();
   const combo = combos[idx % combos.length];
   const Icono = iconoPorCombo(combo);
@@ -53,8 +54,9 @@ export function Motor({ combos, sinBasicos, rescate }: { combos: Combo[]; sinBas
   const meLate = async () => {
     if (guardando) return;
     setGuardando(true);
+    setErrorGuardado(false);
     try {
-      await fetch('/api/registrar-comida', {
+      const res = await fetch('/api/registrar-comida', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -64,11 +66,13 @@ export function Motor({ combos, sinBasicos, rescate }: { combos: Combo[]; sinBas
           calorias: combo.calorias,
         }),
       });
+      if (!res.ok) throw new Error('registro fallido');
+      setElegido(true);
     } catch {
-      // Si falla el guardado, igual mostramos la confirmación visual — el
-      // usuario ya decidió qué comer; no lo bloqueamos por un error de red.
+      setErrorGuardado(true);
+    } finally {
+      setGuardando(false);
     }
-    setElegido(true);
   };
 
   const volver = () => {
@@ -136,6 +140,13 @@ export function Motor({ combos, sinBasicos, rescate }: { combos: Combo[]; sinBas
             </span>
           </div>
         </motion.div>
+
+        {errorGuardado && (
+          <p className="mt-4 flex items-center gap-1.5 text-[13px] font-medium text-[var(--danger)]">
+            <Info size={13} aria-hidden="true" />
+            No pudimos guardarlo. Inténtalo de nuevo.
+          </p>
+        )}
 
         <AnimatePresence mode="wait">
           {!elegido ? (
