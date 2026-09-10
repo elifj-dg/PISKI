@@ -1,18 +1,53 @@
-// Próxima pantalla a construir en esta misma sesión — estado honesto en vez
-// de un enlace roto (regla UX #11).
+// HISTORIAL — proteína y calorías día por día, con navegación real entre
+// semanas (regla UX #13: fechas reales, no "Esta semana"). Pantalla
+// secundaria (no es de las 4 que deciden el dinero) — medición + checklist,
+// sin revisor-visual obligatorio.
 
-import { CalendarDays } from 'lucide-react';
+import { createClient } from '@/lib/supabase/server';
+import { Historial } from '@/components/app/Historial';
 
-export default function HistorialPage() {
+function inicioDeSemana(offsetSemanas: number) {
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  const diaSemana = (hoy.getDay() + 6) % 7; // 0 = lunes
+  const lunes = new Date(hoy);
+  lunes.setDate(hoy.getDate() - diaSemana + offsetSemanas * 7);
+  return lunes;
+}
+
+export default async function HistorialPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ semana?: string }>;
+}) {
+  const { semana } = await searchParams;
+  const offset = Math.min(0, Number.parseInt(semana ?? '0', 10) || 0);
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { data: perfil } = await supabase.from('profiles').select('*').eq('user_id', user!.id).maybeSingle();
+
+  const lunes = inicioDeSemana(offset);
+  const domingoSiguiente = new Date(lunes);
+  domingoSiguiente.setDate(lunes.getDate() + 7);
+
+  const { data: comidasSemana } = await supabase
+    .from('comidas_registradas')
+    .select('*')
+    .eq('user_id', user!.id)
+    .gte('created_at', lunes.toISOString())
+    .lt('created_at', domingoSiguiente.toISOString())
+    .order('created_at', { ascending: true });
+
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center">
-      <span className="flex size-14 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--accent)_10%,transparent)] text-[var(--accent)]">
-        <CalendarDays size={26} aria-hidden="true" />
-      </span>
-      <p className="text-[15px] font-semibold text-[var(--text-primary)]">Tu historial está en camino</p>
-      <p className="max-w-[260px] text-[13px] leading-snug text-[var(--text-secondary)]">
-        Aquí vas a ver tu proteína y calorías de la semana, día por día.
-      </p>
-    </div>
+    <Historial
+      comidas={comidasSemana ?? []}
+      lunesIso={lunes.toISOString()}
+      offset={offset}
+      proteinaObjetivo={perfil?.proteina_objetivo ?? 130}
+    />
   );
 }
