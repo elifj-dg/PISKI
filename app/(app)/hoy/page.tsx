@@ -7,6 +7,7 @@ import { LABEL_OBJETIVO } from '@/lib/plan';
 import { AnilloDelDia } from '@/components/app/AnilloDelDia';
 import { ListaComidasHoy } from '@/components/app/ListaComidasHoy';
 import { BotonesMotor } from '@/components/app/BotonesMotor';
+import { EncabezadoHoy } from '@/components/app/EncabezadoHoy';
 
 function saludoPorHora(hora: number) {
   if (hora < 12) return 'Buenos días';
@@ -45,13 +46,10 @@ export default async function HoyPage() {
 
   return (
     <div className="flex flex-1 flex-col px-5 pt-6">
-      <p className="text-[15px] font-semibold text-[var(--text-secondary)]">
-        {saludoPorHora(hora)}
-        {nombre ? `, ${nombre}` : ''}
-      </p>
-      <h1 className="mt-1 text-balance text-[24px] font-bold leading-[1.2] text-[var(--text-primary)] [font-family:var(--font-display)]">
-        Tu meta hoy: {objetivoLabel}
-      </h1>
+      <EncabezadoHoy
+        saludo={`${saludoPorHora(hora)}${nombre ? `, ${nombre}` : ''}`}
+        meta={`Tu meta hoy: ${objetivoLabel}`}
+      />
 
       <AnilloDelDia
         proteinaConsumida={Math.round(proteinaConsumida)}

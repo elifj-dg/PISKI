@@ -5,11 +5,11 @@
 // estática como en la landing). Baseline de movimiento: conteo héroe +
 // anillo dibujándose al entrar.
 
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { Flame } from 'lucide-react';
 
-const RADIO = 52;
+const RADIO = 56;
 const CIRCUNFERENCIA = 2 * Math.PI * RADIO;
 
 export function AnilloDelDia({
@@ -24,6 +24,7 @@ export function AnilloDelDia({
   caloriasObjetivo: number;
 }) {
   const reduce = useReducedMotion();
+  const gradienteId = useId();
   const porcentaje = proteinaObjetivo > 0 ? Math.min(100, Math.round((proteinaConsumida / proteinaObjetivo) * 100)) : 0;
   const [mostrado, setMostrado] = useState(reduce ? proteinaConsumida : 0);
   const [pctMostrado, setPctMostrado] = useState(reduce ? porcentaje : 0);
@@ -59,15 +60,21 @@ export function AnilloDelDia({
       transition={{ duration: 0.3, delay: 0.1 }}
       className="mt-6 flex items-center gap-5 rounded-[var(--radius-card)] bg-[var(--surface)] p-5 shadow-[var(--shadow-2)]"
     >
-      <div className="relative size-28 shrink-0">
-        <svg width={112} height={112} viewBox="0 0 112 112" role="img" aria-label={`${pctMostrado} por ciento de tu meta de proteína hoy`}>
-          <circle cx={56} cy={56} r={RADIO} fill="none" stroke="var(--surface-2)" strokeWidth={10} />
+      <div className="relative size-32 shrink-0">
+        <svg width={128} height={128} viewBox="0 0 128 128" role="img" aria-label={`${pctMostrado} por ciento de tu meta de proteína hoy`}>
+          <defs>
+            <linearGradient id={gradienteId} x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="var(--accent)" />
+              <stop offset="100%" stopColor="var(--accent-2)" />
+            </linearGradient>
+          </defs>
+          <circle cx={64} cy={64} r={RADIO} fill="none" stroke="var(--surface-2)" strokeWidth={10} />
           <motion.circle
-            cx={56}
-            cy={56}
+            cx={64}
+            cy={64}
             r={RADIO}
             fill="none"
-            stroke="var(--accent)"
+            stroke={`url(#${gradienteId})`}
             strokeWidth={10}
             strokeLinecap="round"
             strokeDasharray={CIRCUNFERENCIA}
@@ -75,10 +82,10 @@ export function AnilloDelDia({
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-[22px] font-bold tabular-nums leading-none text-[var(--text-primary)] [font-family:var(--font-display)]">
+          <span className="text-[28px] font-bold tabular-nums leading-none text-[var(--text-primary)] [font-family:var(--font-display)]">
             {mostrado}g
           </span>
-          <span className="text-[11px] text-[var(--text-tertiary)]">de {proteinaObjetivo}g</span>
+          <span className="mt-1 text-[11px] text-[var(--text-tertiary)]">de {proteinaObjetivo}g</span>
         </div>
       </div>
 
