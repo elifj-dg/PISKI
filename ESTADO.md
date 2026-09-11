@@ -238,5 +238,9 @@ El usuario eligió empezar por "Hoy" (la pantalla principal). Reemplaza el check
 
 - **Login real confirmado funcionando de punta a punta en producción** (usuario): recibió el correo con el enlace y pudo entrar. Con esto quedan cerrados los 3 bugs de esta ronda (clave pública corrupta, SMTP de Resend inactivo, clave pública corrupta otra vez). `automatic_updates_verified` sigue vigente (commit `490f99b` es el SHA activo en `/api/salud`).
 
+## Google OAuth conectado
+El usuario creó el proyecto y las credenciales OAuth en Google Cloud Console (app "Piski"), con el callback correcto (`https://bsmlxqzjhqcksevhfbhq.supabase.co/auth/v1/callback`) y el origen `https://piski.vercel.app`. Se activó "Sign in with Google" en Supabase Auth con el Client ID y Secret reales (el primer intento tenía el valor por defecto "elifj-dg's Project" en vez del ID real — mismo patrón de error que con el usuario de Resend — se corrigió). Verificado con el navegador de control: el botón "Continuar con Google" ya redirige correctamente a la pantalla de selección de cuenta de Google (antes daba "provider is not enabled"). Pendiente que el usuario complete un login real de punta a punta desde su celular para confirmar que la sesión se crea bien.
+- ⚠️ Nota de seguridad: el Client Secret de Google quedó visible brevemente en una captura de pantalla compartida en el chat — se le pidió al usuario regenerarlo antes de usarlo, y así se hizo (se generó y usó un secreto nuevo, no el expuesto).
+
 ## Siguiente paso
-Revisar que "Hoy" muestra los datos reales correctamente con la sesión del usuario, lanzar `revisor-visual` sobre "Hoy" (pantalla principal, obligatorio — Regla de Oro 7), y seguir con Historial (datos reales + navegación entre semanas).
+Confirmar con el usuario que el login con Google funciona de punta a punta desde su celular. Después: decidir con el usuario si se conecta IA real (Anthropic) al Motor, y seguir con el pulido visual pendiente de "Hoy" (ver `veredicto:hoy` en Problemas conocidos).
