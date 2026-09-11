@@ -243,4 +243,4 @@ El usuario creó el proyecto y las credenciales OAuth en Google Cloud Console (a
 - ⚠️ Nota de seguridad: el Client Secret de Google quedó visible brevemente en una captura de pantalla compartida en el chat — se le pidió al usuario regenerarlo antes de usarlo, y así se hizo (se generó y usó un secreto nuevo, no el expuesto).
 
 ## Siguiente paso
-Decidir con el usuario si se conecta IA real (Anthropic) al Motor, y seguir con el pulido visual pendiente de "Hoy" (ver `veredicto:hoy` en Problemas conocidos).
+**Decisión del usuario**: esperar a tener usuarios reales antes de conectar IA real (Anthropic) al Motor — se sigue con el motor determinista actual por ahora. Pendiente: el pulido visual de "Hoy" (ver `veredicto:hoy` en Problemas conocidos), y avanzar hacia la etapa de venta real (Hotmart) si el usuario quiere lanzar pronto.
