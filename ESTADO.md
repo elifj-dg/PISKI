@@ -261,5 +261,7 @@ El usuario pidió empezar a cobrar de verdad. Se sigue `18-VENTA-HOTMART.md` al 
   2. Configurar el webhook en el panel de Hotmart (URL: `https://piski.vercel.app/api/webhooks/hotmart`, eventos: compra aprobada/completa/reembolsada, chargeback, cancelación, cambio de plan, inicio de prueba) y copiar el HOTTOK a `HOTMART_HOTTOK` en Vercel.
   3. Hacer una compra de prueba real de punta a punta (Paso F / "PRUEBA DE PAGO DE PUNTA A PUNTA" de `18`) antes de anunciar la app a nadie — incluye confirmar con qué nombre EXACTO llega el evento de inicio de trial (el placeholder de `lib/membership-fsm.ts`).
 
+- **`SUPABASE_SECRET_KEY` agregada en Vercel Production** por el usuario — el webhook ya tiene lo que necesita para crear usuarios (`auth.admin.createUser`) y llamar la RPC de la máquina de estados. El usuario autorizó continuar sin pedirle pasos manuales de aquí en adelante, salvo credenciales/contraseñas.
+
 ## Siguiente paso
-Construir el endpoint del webhook de Hotmart + la conexión real del paywall al checkout, mientras se espera la aprobación del producto en Hotmart.
+Esperar la aprobación de Hotmart (hasta 15 min desde que se envió). En cuanto esté aprobado: copiar los 2 links de pago a `NEXT_PUBLIC_HOTMART_CHECKOUT_MENSUAL`/`_ANUAL` en Vercel, configurar el webhook en el panel de Hotmart y copiar el HOTTOK a `HOTMART_HOTTOK`, y hacer la compra de prueba de punta a punta antes de anunciar la app.
