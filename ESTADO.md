@@ -263,5 +263,7 @@ El usuario pidió empezar a cobrar de verdad. Se sigue `18-VENTA-HOTMART.md` al 
 
 - **`SUPABASE_SECRET_KEY` agregada en Vercel Production** por el usuario — el webhook ya tiene lo que necesita para crear usuarios (`auth.admin.createUser`) y llamar la RPC de la máquina de estados. El usuario autorizó continuar sin pedirle pasos manuales de aquí en adelante, salvo credenciales/contraseñas.
 
+- **Producto aprobado y activo en Hotmart** (ID `8510907`, "Ventas activas"). Links de pago reales ya guardados en Vercel Production como `NEXT_PUBLIC_HOTMART_CHECKOUT_ANUAL`/`_MENSUAL` (son públicos por diseño — hechos para compartirse — el usuario los pegó directo en el chat, seguro para este caso).
+
 ## Siguiente paso
-Esperar la aprobación de Hotmart (hasta 15 min desde que se envió). En cuanto esté aprobado: copiar los 2 links de pago a `NEXT_PUBLIC_HOTMART_CHECKOUT_MENSUAL`/`_ANUAL` en Vercel, configurar el webhook en el panel de Hotmart y copiar el HOTTOK a `HOTMART_HOTTOK`, y hacer la compra de prueba de punta a punta antes de anunciar la app.
+Configurar el webhook en el panel de Hotmart (URL `https://piski.vercel.app/api/webhooks/hotmart` + eventos) y copiar el HOTTOK a `HOTMART_HOTTOK` en Vercel; publicar de nuevo para que el paywall tome los links reales; y hacer la compra de prueba de punta a punta antes de anunciar la app a nadie.
