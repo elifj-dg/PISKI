@@ -52,15 +52,19 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'stale' }, { status: 400 });
   }
 
-  // 3. Datos del evento
+  // 3. Datos del evento — el correo del comprador viaja en `buyer` en compras,
+  //    pero en eventos de suscripción (cancelación, cambio de plan) Hotmart
+  //    lo manda dentro de `subscriber` en su lugar.
   const event = String(payload.event ?? '');
+  const email: string | undefined =
+    data.buyer?.email ?? data.subscriber?.email ?? data.subscription?.subscriber?.email ?? (payload.email as string | undefined);
+  const subscriberCode: string | undefined =
+    data.subscriber?.code ?? data.subscription?.subscriber?.code;
   const eventId =
     (payload.id as string) ??
     (payload.event_id as string) ??
     data.purchase?.transaction ??
-    `${event}:${data.buyer?.email}:${ts || ''}`;
-  const email: string | undefined = data.buyer?.email ?? (payload.email as string | undefined);
-  const subscriberCode: string | undefined = data.subscription?.subscriber?.code;
+    `${event}:${email}:${ts || ''}`;
 
   if (event === PLAN_CHANGE_EVENT) {
     // Cambio de plan mensual<->anual: no transiciona el estado, solo se
