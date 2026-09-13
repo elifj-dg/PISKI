@@ -267,5 +267,7 @@ El usuario pidió empezar a cobrar de verdad. Se sigue `18-VENTA-HOTMART.md` al 
 
 - **Webhook registrado y activo en Hotmart** ("Piski - acceso automático", apuntando a `https://piski.vercel.app/api/webhooks/hotmart`, 8 eventos activos: compra aprobada/completa/reembolsada/atrasada/con plazo vencido, chargeback, cancelación de suscripción, cambio de plan). `HOTMART_HOTTOK` guardado en Vercel Production.
 
+- **Test del webhook de Hotmart: PASA (8/8 eventos, todos 200)**. Se encontró y corrigió un bug real durante la prueba: para eventos de suscripción (cancelación, cambio de plan) Hotmart manda el correo del comprador en `data.subscriber.email`, NO en `data.buyer.email` como las compras — el webhook devolvía `400 sin correo del comprador` para esos casos. Corregido (ahora revisa ambas rutas) y reverificado con una prueba nueva: los 8 eventos configurados (compra aprobada/completa/reembolsada/atrasada/con plazo vencido, chargeback, cancelación, cambio de plan) responden `200 - Procesado`. Nota aparte: el correo de prueba de Hotmart usa el dominio `@example.com`, que Supabase bloquea por diseño (anti-abuso) — con compradores reales esto no pasa.
+
 ## Siguiente paso
-Publicar de nuevo para que el servidor tome `HOTMART_HOTTOK` y los links reales de checkout; enviar el test del webhook desde el panel de Hotmart para confirmar que responde 200; y hacer la compra de prueba de punta a punta antes de anunciar la app a nadie.
+Hacer la compra de prueba REAL de punta a punta (con el correo propio del usuario, no el de prueba de Hotmart) antes de anunciar la app a nadie — confirmar que llega el correo de acceso y que la cuenta queda con el plan correcto en Supabase.
