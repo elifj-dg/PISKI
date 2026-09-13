@@ -692,7 +692,18 @@ export default function OnboardingPage() {
               }}
               onComprar={(planId: string) => {
                 guardarRespuestas();
-                router.push(`/entrar?plan=${planId}`);
+                const checkoutUrl =
+                  planId === 'anual'
+                    ? process.env.NEXT_PUBLIC_HOTMART_CHECKOUT_ANUAL
+                    : process.env.NEXT_PUBLIC_HOTMART_CHECKOUT_MENSUAL;
+                // El pago real ocurre en Hotmart — al comprar, su webhook crea la
+                // cuenta y manda el enlace de acceso (ver 18-VENTA-HOTMART.md).
+                // Sin el link configurado todavía, no se puede cobrar de verdad.
+                if (checkoutUrl) {
+                  window.location.href = checkoutUrl;
+                } else {
+                  router.push(`/entrar?plan=${planId}`);
+                }
               }}
             />
           )}
