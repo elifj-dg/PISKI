@@ -265,5 +265,7 @@ El usuario pidió empezar a cobrar de verdad. Se sigue `18-VENTA-HOTMART.md` al 
 
 - **Producto aprobado y activo en Hotmart** (ID `8510907`, "Ventas activas"). Links de pago reales ya guardados en Vercel Production como `NEXT_PUBLIC_HOTMART_CHECKOUT_ANUAL`/`_MENSUAL` (son públicos por diseño — hechos para compartirse — el usuario los pegó directo en el chat, seguro para este caso).
 
+- **Webhook registrado y activo en Hotmart** ("Piski - acceso automático", apuntando a `https://piski.vercel.app/api/webhooks/hotmart`, 8 eventos activos: compra aprobada/completa/reembolsada/atrasada/con plazo vencido, chargeback, cancelación de suscripción, cambio de plan). `HOTMART_HOTTOK` guardado en Vercel Production.
+
 ## Siguiente paso
-Configurar el webhook en el panel de Hotmart (URL `https://piski.vercel.app/api/webhooks/hotmart` + eventos) y copiar el HOTTOK a `HOTMART_HOTTOK` en Vercel; publicar de nuevo para que el paywall tome los links reales; y hacer la compra de prueba de punta a punta antes de anunciar la app a nadie.
+Publicar de nuevo para que el servidor tome `HOTMART_HOTTOK` y los links reales de checkout; enviar el test del webhook desde el panel de Hotmart para confirmar que responde 200; y hacer la compra de prueba de punta a punta antes de anunciar la app a nadie.
