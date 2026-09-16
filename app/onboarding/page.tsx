@@ -92,6 +92,7 @@ interface Respuestas {
   organizacion?: string;
   precision?: string;
   restricciones: string[];
+  alergias: string;
   presupuesto?: string;
   momento?: string;
   basicos: string[];
@@ -120,6 +121,7 @@ export default function OnboardingPage() {
     edad: '',
     pesoObjetivo: '',
     restricciones: [],
+    alergias: '',
     basicos: [],
     compromiso: 5,
   });
@@ -216,6 +218,7 @@ export default function OnboardingPage() {
       organizacion: respuestas.organizacion,
       precision: respuestas.precision,
       restricciones: respuestas.restricciones,
+      alergias: respuestas.alergias,
       presupuesto: respuestas.presupuesto,
       basicos: respuestas.basicos,
       compromiso: respuestas.compromiso,
@@ -225,8 +228,8 @@ export default function OnboardingPage() {
   };
 
   const recomendaciones = useMemo(
-    () => ordenarRecomendaciones(respuestas.basicos as BasicoId[], respuestas.objetivo ?? 'comer_mejor'),
-    [respuestas.basicos, respuestas.objetivo]
+    () => ordenarRecomendaciones(respuestas.basicos as BasicoId[], respuestas.objetivo ?? 'comer_mejor', respuestas.restricciones),
+    [respuestas.basicos, respuestas.objetivo, respuestas.restricciones]
   );
 
   // Conteo animado del número héroe del paso "compromiso" — solo al entrar al
@@ -539,6 +542,22 @@ export default function OnboardingPage() {
                   />
                 ))}
               </OpcionesGrupo>
+
+              <label className="mt-6 block">
+                <span className="text-[13px] font-semibold text-[var(--text-secondary)]">¿Alguna alergia específica? (opcional)</span>
+                <input
+                  type="text"
+                  inputMode="text"
+                  value={respuestas.alergias}
+                  placeholder="Ej. camarones, nueces, cacahuate"
+                  onChange={(e) => setRespuestas((r) => ({ ...r, alergias: e.target.value }))}
+                  className="mt-1.5 h-14 w-full rounded-[var(--radius-button)] border border-[color-mix(in_oklab,var(--text-tertiary)_28%,transparent)] bg-[var(--surface)] px-4 text-[16px] text-[var(--text-primary)] outline-none placeholder:text-[var(--text-tertiary)]"
+                />
+                <span className="mt-1.5 block text-[12px] text-[var(--text-tertiary)]">
+                  La guardamos en tu perfil para futuras mejoras — ahora mismo Piski solo evita automáticamente lo que marcaste arriba (vegetariano, sin lactosa).
+                </span>
+              </label>
+
               <CtaFijo
                 label="Continuar"
                 disabled={respuestas.restricciones.length === 0}

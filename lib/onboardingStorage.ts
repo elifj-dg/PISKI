@@ -19,6 +19,7 @@ export interface OnboardingGuardado {
   organizacion?: string;
   precision?: string;
   restricciones: string[];
+  alergias?: string;
   presupuesto?: string;
   basicos: string[];
   compromiso: number;

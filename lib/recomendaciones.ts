@@ -42,14 +42,27 @@ export function labelCosto(c: Combo['costo']): string {
   return LABEL_COSTO[c];
 }
 
+// Ingredientes que cada restricción excluye. "Sin gluten" no excluye nada
+// de la lista actual: las tortillas de Piski son de maíz, naturalmente sin
+// gluten — no hay ningún ingrediente con gluten en los básicos de hoy.
+const INGREDIENTES_EXCLUIDOS_POR_RESTRICCION: Record<string, BasicoId[]> = {
+  Vegetariano: ['pollo', 'atun'],
+  'Sin lactosa': ['queso'],
+};
+
 /**
  * Ordena los combos para un usuario: primero los que usan SOLO básicos que
  * ya tiene (coincidencia total), luego por mayor coincidencia parcial: nunca
  * deja al usuario sin ninguna opción, aunca haya marcado pocos básicos.
+ * Nunca sugiere un combo que choque con una restricción marcada (vegetariano,
+ * sin lactosa) — regla dura, no un "casi": ver Constitución del producto.
  */
-export function ordenarRecomendaciones(basicos: BasicoId[], objetivo: Objetivo): Combo[] {
+export function ordenarRecomendaciones(basicos: BasicoId[], objetivo: Objetivo, restricciones: string[] = []): Combo[] {
+  const ingredientesExcluidos = new Set(restricciones.flatMap((r) => INGREDIENTES_EXCLUIDOS_POR_RESTRICCION[r] ?? []));
+  const combosPermitidos = ingredientesExcluidos.size === 0 ? COMBOS : COMBOS.filter((c) => !c.ingredientes.some((i) => ingredientesExcluidos.has(i)));
+
   const set = new Set(basicos);
-  const conCoincidencia = COMBOS.map((c) => {
+  const conCoincidencia = combosPermitidos.map((c) => {
     const tiene = c.ingredientes.filter((i) => set.has(i)).length;
     const completo = tiene === c.ingredientes.length;
     return { combo: c, tiene, completo };

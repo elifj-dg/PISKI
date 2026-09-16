@@ -21,6 +21,7 @@ const esquema = z.object({
   organizacion: z.string().optional(),
   precision: z.string().optional(),
   restricciones: z.array(z.string()).default([]),
+  alergias: z.string().optional(),
   presupuesto: z.string().optional(),
   basicos: z.array(z.string()).default([]),
   compromiso: z.number().optional(),
@@ -66,6 +67,7 @@ export async function POST(request: Request) {
         precision: d.precision || null,
         compromiso: d.compromiso ?? null,
         entrenamiento: d.entrenamiento || null,
+        alergias: d.alergias || null,
       },
     })
     .eq('user_id', user.id);

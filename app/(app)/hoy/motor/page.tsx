@@ -19,13 +19,14 @@ export default async function MotorPage({ searchParams }: { searchParams: Promis
   if (!user) redirect('/entrar');
 
   const [{ data: perfil }, { data: basicosFilas }] = await Promise.all([
-    supabase.from('profiles').select('objetivo').eq('user_id', user.id).maybeSingle(),
+    supabase.from('profiles').select('objetivo, restricciones').eq('user_id', user.id).maybeSingle(),
     supabase.from('mis_basicos').select('alimento').eq('user_id', user.id),
   ]);
 
   const basicos = (basicosFilas ?? []).map((b) => b.alimento as BasicoId);
   const objetivo = (perfil?.objetivo as Objetivo) ?? 'comer_mejor';
-  const combos = ordenarRecomendaciones(basicos, objetivo);
+  const restricciones = (perfil?.restricciones as string[] | null) ?? [];
+  const combos = ordenarRecomendaciones(basicos, objetivo, restricciones);
 
   return <Motor combos={combos} sinBasicos={basicos.length === 0} rescate={modo === 'rescate'} />;
 }
