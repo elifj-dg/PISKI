@@ -75,7 +75,7 @@ export function Hero({
         <header className="flex h-16 items-center justify-between">
           <a href="/" className="flex items-center gap-2 text-[16px] font-semibold text-[var(--text-primary)]">
             {logo ?? <span aria-hidden="true" className="size-6 rounded-[8px] bg-[var(--accent)]" />}
-            {appName}
+            <span className={logo ? 'sr-only' : undefined}>{appName}</span>
           </a>
           {loginHref && (
             <a href={loginHref} className="px-2 py-3 text-[14px] font-medium text-[var(--text-secondary)]">

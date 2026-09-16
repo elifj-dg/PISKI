@@ -4,6 +4,7 @@
 // de 19-PAGINA-DE-VENTAS.md. Copy marcado trazado a FICHA-AVATAR.md, ver
 // docs/copy/landing.md. Modelo de negocio: onboarding-first (preview anónimo).
 
+import Image from 'next/image';
 import { Utensils, Calculator, Frown, RefreshCw, Leaf, Zap, HeartHandshake, ClipboardList, Sparkles, ThumbsUp } from 'lucide-react';
 import { Hero } from '@/components/landing/Hero';
 import { Problema } from '@/components/landing/Problema';
@@ -37,6 +38,11 @@ export default function LandingPiski() {
       {/* 1. HERO */}
       <Hero
         appName="Piski"
+        logo={
+          <span className="block h-[38px] w-[137px] overflow-hidden">
+            <Image src="/piski-logo.png" alt="Piski" width={1080} height={600} className="h-[52px] w-auto max-w-none" priority />
+          </span>
+        }
         loginHref="/entrar"
         h1Marked="¿Qué como ahora? Piski te lo dice en [b]10 segundos[/b]"
         subtitleMarked="Con lo que tienes, tu presupuesto y tu objetivo del día."
