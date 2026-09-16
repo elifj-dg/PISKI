@@ -281,5 +281,7 @@ El usuario pidió empezar a cobrar de verdad. Se sigue `18-VENTA-HOTMART.md` al 
 
 - **Decisión del usuario**: terminar primero el enriquecimiento visual (fotos, landing, app) y dejar la IA real del Motor para el final, cuando ya haya usuarios reales usándola — mismo razonamiento de antes (costo por uso + mejor decidido con datos reales de qué escribe la gente).
 
+- **Lista de básicos ampliada** (`lib/recomendaciones.ts`): de 8 a 17 ingredientes (se agregaron nopales, jitomate, cebolla, jamón, salchicha, chorizo, avena, plátano, pan) y de 10 a 18 combinaciones — mismos lugares actualizados (chips del onboarding, "Mis básicos" de Perfil). El filtro de "Vegetariano" ahora también excluye jamón/salchicha/chorizo.
+
 ## Siguiente paso
-Esperar las fotos de comida generadas por el usuario para colocarlas en la landing y en la app. Mientras tanto, pendiente por confirmar con el usuario: si se amplía ya la lista de básicos del Motor a mano (no requiere fotos, se puede hacer en paralelo). Otros pendientes: dominio propio, conectar IA real al Motor (al final), y las secciones de Perfil que se dejaron para después (recordatorios, integraciones de salud, gestión de "Mi plan", favoritos de comida).
+Esperar las fotos de comida generadas por el usuario para colocarlas en la landing y en la app. Otros pendientes: dominio propio, conectar IA real al Motor (al final, cuando haya usuarios reales), y las secciones de Perfil que se dejaron para después (recordatorios, integraciones de salud, gestión de "Mi plan", favoritos de comida).
