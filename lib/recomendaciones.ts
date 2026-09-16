@@ -7,7 +7,24 @@
 
 import type { Objetivo } from './plan';
 
-export type BasicoId = 'huevo' | 'pollo' | 'frijoles' | 'tortillas' | 'arroz' | 'atun' | 'aguacate' | 'queso';
+export type BasicoId =
+  | 'huevo'
+  | 'pollo'
+  | 'frijoles'
+  | 'tortillas'
+  | 'arroz'
+  | 'atun'
+  | 'aguacate'
+  | 'queso'
+  | 'nopales'
+  | 'jitomate'
+  | 'cebolla'
+  | 'jamon'
+  | 'salchicha'
+  | 'chorizo'
+  | 'avena'
+  | 'platano'
+  | 'pan';
 
 export interface Combo {
   id: string;
@@ -30,6 +47,14 @@ const COMBOS: Combo[] = [
   { id: 'bowl-pollo-completo', nombre: 'Bowl de pollo, arroz y frijoles', ingredientes: ['pollo', 'arroz', 'frijoles'], proteina: 40, calorias: 560, tiempoMin: 20, costo: 'medio' },
   { id: 'huevo-queso-tortilla', nombre: 'Huevo con queso y tortillas', ingredientes: ['huevo', 'queso', 'tortillas'], proteina: 24, calorias: 430, tiempoMin: 8, costo: 'economico' },
   { id: 'frijol-arroz-queso', nombre: 'Frijoles con arroz y queso', ingredientes: ['frijoles', 'arroz', 'queso'], proteina: 20, calorias: 470, tiempoMin: 12, costo: 'economico' },
+  { id: 'nopales-huevo-queso', nombre: 'Nopales asados con huevo y queso', ingredientes: ['nopales', 'huevo', 'queso'], proteina: 24, calorias: 360, tiempoMin: 12, costo: 'economico' },
+  { id: 'jamon-huevo-tortilla', nombre: 'Huevo con jamón y tortillas', ingredientes: ['huevo', 'jamon', 'tortillas'], proteina: 26, calorias: 410, tiempoMin: 8, costo: 'economico' },
+  { id: 'salchicha-huevo-tortilla', nombre: 'Huevo con salchicha y tortillas', ingredientes: ['huevo', 'salchicha', 'tortillas'], proteina: 24, calorias: 440, tiempoMin: 8, costo: 'economico' },
+  { id: 'chorizo-huevo-tortilla', nombre: 'Huevo con chorizo y tortillas', ingredientes: ['huevo', 'chorizo', 'tortillas'], proteina: 26, calorias: 480, tiempoMin: 10, costo: 'economico' },
+  { id: 'pollo-nopales-jitomate', nombre: 'Pollo con nopales y jitomate', ingredientes: ['pollo', 'nopales', 'jitomate'], proteina: 36, calorias: 380, tiempoMin: 18, costo: 'medio' },
+  { id: 'huevo-mexicana', nombre: 'Huevo a la mexicana', ingredientes: ['huevo', 'jitomate', 'cebolla'], proteina: 18, calorias: 320, tiempoMin: 10, costo: 'economico' },
+  { id: 'avena-platano', nombre: 'Avena con plátano', ingredientes: ['avena', 'platano'], proteina: 12, calorias: 310, tiempoMin: 5, costo: 'economico' },
+  { id: 'sandwich-huevo-jamon', nombre: 'Sándwich de huevo con jamón', ingredientes: ['pan', 'huevo', 'jamon'], proteina: 22, calorias: 380, tiempoMin: 8, costo: 'economico' },
 ];
 
 const LABEL_COSTO: Record<Combo['costo'], string> = {
@@ -46,7 +71,7 @@ export function labelCosto(c: Combo['costo']): string {
 // de la lista actual: las tortillas de Piski son de maíz, naturalmente sin
 // gluten — no hay ningún ingrediente con gluten en los básicos de hoy.
 const INGREDIENTES_EXCLUIDOS_POR_RESTRICCION: Record<string, BasicoId[]> = {
-  Vegetariano: ['pollo', 'atun'],
+  Vegetariano: ['pollo', 'atun', 'jamon', 'salchicha', 'chorizo'],
   'Sin lactosa': ['queso'],
 };
 

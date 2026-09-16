@@ -108,6 +108,15 @@ const BASICOS_OPCIONES = [
   { id: 'atun', label: 'Atún', icon: <Beef size={18} /> },
   { id: 'aguacate', label: 'Aguacate', icon: <Leaf size={18} /> },
   { id: 'queso', label: 'Queso panela', icon: <Egg size={18} /> },
+  { id: 'nopales', label: 'Nopales', icon: <Leaf size={18} /> },
+  { id: 'jitomate', label: 'Jitomate', icon: <Leaf size={18} /> },
+  { id: 'cebolla', label: 'Cebolla', icon: <Leaf size={18} /> },
+  { id: 'jamon', label: 'Jamón', icon: <Beef size={18} /> },
+  { id: 'salchicha', label: 'Salchicha', icon: <Beef size={18} /> },
+  { id: 'chorizo', label: 'Chorizo', icon: <Beef size={18} /> },
+  { id: 'avena', label: 'Avena', icon: <Wheat size={18} /> },
+  { id: 'platano', label: 'Plátano', icon: <Leaf size={18} /> },
+  { id: 'pan', label: 'Pan', icon: <Wheat size={18} /> },
 ];
 
 export default function OnboardingPage() {

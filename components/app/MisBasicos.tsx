@@ -14,6 +14,15 @@ const TODOS_LOS_BASICOS: { id: BasicoId; label: string }[] = [
   { id: 'atun', label: 'Atún' },
   { id: 'aguacate', label: 'Aguacate' },
   { id: 'queso', label: 'Queso' },
+  { id: 'nopales', label: 'Nopales' },
+  { id: 'jitomate', label: 'Jitomate' },
+  { id: 'cebolla', label: 'Cebolla' },
+  { id: 'jamon', label: 'Jamón' },
+  { id: 'salchicha', label: 'Salchicha' },
+  { id: 'chorizo', label: 'Chorizo' },
+  { id: 'avena', label: 'Avena' },
+  { id: 'platano', label: 'Plátano' },
+  { id: 'pan', label: 'Pan' },
 ];
 
 export function MisBasicos({ seleccionados }: { seleccionados: string[] }) {
