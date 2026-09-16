@@ -5,15 +5,15 @@
 // respuesta concreta — no solo un número de calorías. "¿Te late?" / "Dame
 // otra" es el gesto de aprendizaje que define a Piski frente a un contador.
 //
-// Sin fotografía real de comida todavía (sin pipeline de assets, ver
-// 20-ASSETS-VISUALES.md) — el ícono grande por categoría de ingrediente es el
-// ancla visual de transición hasta que exista esa foto real.
+// Foto real generada con IA cuando el combo la tiene (fotoCombo); si no,
+// cae al ícono grande por categoría de ingrediente como ancla visual.
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 import { Clock, DollarSign, Flame, ThumbsUp, RotateCcw, Egg, Beef, Leaf, Wheat, Sparkles, Zap } from 'lucide-react';
 import type { Combo } from '@/lib/recomendaciones';
-import { labelCosto } from '@/lib/recomendaciones';
+import { labelCosto, fotoCombo } from '@/lib/recomendaciones';
 import { CtaFijo } from './ui';
 
 function iconoPorCombo(combo: Combo) {
@@ -38,6 +38,7 @@ export function Recomendacion({
   const reduce = useReducedMotion();
   const combo = combos[idx % combos.length];
   const Icono = iconoPorCombo(combo);
+  const foto = fotoCombo(combo.id);
 
   // Conteo animado de la proteína — el dato que más importa en este combo —
   // cada vez que cambia (entrada inicial y cada "Dame otra").
@@ -86,32 +87,40 @@ export function Recomendacion({
         initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-        className="mt-4 rounded-[var(--radius-card)] bg-[var(--surface)] p-5 shadow-[var(--shadow-2)]"
+        className="mt-4 overflow-hidden rounded-[var(--radius-card)] bg-[var(--surface)] shadow-[var(--shadow-2)]"
         style={{ boxShadow: '0 16px 40px -12px color-mix(in oklab, var(--text-primary) 22%, transparent)' }}
       >
-        <span className="flex size-16 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--accent)_12%,transparent)] text-[var(--accent)]">
-          <Icono size={30} aria-hidden="true" />
-        </span>
-        <h1 className="mt-4 text-balance text-[26px] font-bold leading-[1.2] text-[var(--text-primary)] [font-family:var(--font-display)]">
-          {combo.nombre}
-        </h1>
-        <div className="mt-4 flex flex-wrap gap-2">
-          <span className="flex items-center gap-1.5 rounded-full bg-[color-mix(in_oklab,var(--accent)_10%,transparent)] px-3 py-1.5 text-[13px] font-semibold text-[var(--accent)]">
-            <Flame size={14} aria-hidden="true" />
-            {proteinaMostrada}g proteína
+        {foto ? (
+          <div className="relative aspect-square w-full">
+            <Image src={foto} alt={combo.nombre} fill sizes="(max-width: 480px) 100vw, 420px" className="object-cover" priority />
+          </div>
+        ) : (
+          <span className="m-5 flex size-16 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--accent)_12%,transparent)] text-[var(--accent)]">
+            <Icono size={30} aria-hidden="true" />
           </span>
-          <span className="flex items-center gap-1.5 rounded-full bg-[var(--surface-2)] px-3 py-1.5 text-[13px] font-medium text-[var(--text-secondary)]">
-            <Zap size={14} aria-hidden="true" />
-            {combo.calorias} kcal
-          </span>
-          <span className="flex items-center gap-1.5 rounded-full bg-[var(--surface-2)] px-3 py-1.5 text-[13px] font-medium text-[var(--text-secondary)]">
-            <Clock size={14} aria-hidden="true" />
-            {combo.tiempoMin} min
-          </span>
-          <span className="flex items-center gap-1.5 rounded-full bg-[var(--surface-2)] px-3 py-1.5 text-[13px] font-medium text-[var(--text-secondary)]">
-            <DollarSign size={14} aria-hidden="true" />
-            {labelCosto(combo.costo)}
-          </span>
+        )}
+        <div className="p-5 pt-4">
+          <h1 className="text-balance text-[26px] font-bold leading-[1.2] text-[var(--text-primary)] [font-family:var(--font-display)]">
+            {combo.nombre}
+          </h1>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <span className="flex items-center gap-1.5 rounded-full bg-[color-mix(in_oklab,var(--accent)_10%,transparent)] px-3 py-1.5 text-[13px] font-semibold text-[var(--accent)]">
+              <Flame size={14} aria-hidden="true" />
+              {proteinaMostrada}g proteína
+            </span>
+            <span className="flex items-center gap-1.5 rounded-full bg-[var(--surface-2)] px-3 py-1.5 text-[13px] font-medium text-[var(--text-secondary)]">
+              <Zap size={14} aria-hidden="true" />
+              {combo.calorias} kcal
+            </span>
+            <span className="flex items-center gap-1.5 rounded-full bg-[var(--surface-2)] px-3 py-1.5 text-[13px] font-medium text-[var(--text-secondary)]">
+              <Clock size={14} aria-hidden="true" />
+              {combo.tiempoMin} min
+            </span>
+            <span className="flex items-center gap-1.5 rounded-full bg-[var(--surface-2)] px-3 py-1.5 text-[13px] font-medium text-[var(--text-secondary)]">
+              <DollarSign size={14} aria-hidden="true" />
+              {labelCosto(combo.costo)}
+            </span>
+          </div>
         </div>
       </motion.div>
 

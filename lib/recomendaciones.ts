@@ -67,6 +67,27 @@ export function labelCosto(c: Combo['costo']): string {
   return LABEL_COSTO[c];
 }
 
+// Fotos reales generadas con IA (docs/sistema/20-ASSETS-VISUALES.md — receta
+// de prompt en ESTADO.md). Solo los 10 combos originales tienen foto todavía;
+// los agregados en la ampliación de básicos caen al ícono por librería hasta
+// que se generen las suyas.
+const COMBOS_CON_FOTO = new Set([
+  'huevo-frijol-tortilla',
+  'pollo-arroz-aguacate',
+  'atun-tortilla-aguacate',
+  'quesadilla-frijol',
+  'pollo-frijol-tortilla',
+  'huevo-aguacate-tortilla',
+  'atun-arroz',
+  'bowl-pollo-completo',
+  'huevo-queso-tortilla',
+  'frijol-arroz-queso',
+]);
+
+export function fotoCombo(comboId: string): string | null {
+  return COMBOS_CON_FOTO.has(comboId) ? `/comidas/${comboId}.png` : null;
+}
+
 // Ingredientes que cada restricción excluye. "Sin gluten" no excluye nada
 // de la lista actual: las tortillas de Piski son de maíz, naturalmente sin
 // gluten — no hay ningún ingrediente con gluten en los básicos de hoy.
