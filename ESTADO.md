@@ -285,3 +285,10 @@ El usuario pidió empezar a cobrar de verdad. Se sigue `18-VENTA-HOTMART.md` al 
 
 ## Siguiente paso
 Esperar las fotos de comida generadas por el usuario para colocarlas en la landing y en la app. Otros pendientes: dominio propio, conectar IA real al Motor (al final, cuando haya usuarios reales), y las secciones de Perfil que se dejaron para después (recordatorios, integraciones de salud, gestión de "Mi plan", favoritos de comida).
+
+## Checkpoint (Sesión 9, 2026-11-23)
+- Fase: enriquecimiento visual tras cerrar la venta real (Hotmart verificada con compra real). Pantalla en curso: Motor/Recomendación con fotos reales (commit ec7da64, 10 PNG en `public/comidas/`, `fotoCombo()`).
+- Deploy de ec7da64 NO reflejado en producción tras +14 min (SHA seguía b88dc80): pendiente revisar Vercel → Deployments; opción de arreglo: comprimir las PNG (~2.5MB c/u).
+- Decisiones: IA real al final con usuarios reales. El usuario preguntó cómo cancelar su suscripción de prueba (se cancela en Hotmart); se ofreció sección "Mi plan" en Perfil, esperando su OK.
+- Veredictos landing/onboarding/paywall: siguen NO LISTA por decisión documentada arriba (`veredicto:landing`, `veredicto:onboarding`, `veredicto:paywall` en Problemas conocidos — ronda de revisión detenida a propósito, pulido en Sesión 7); no se declaran "listas".
+- Siguiente paso: destrabar deploy, verificar fotos en producción, definir "Mi plan"/cancelación en Perfil.
